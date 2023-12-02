@@ -6,7 +6,7 @@ project(yuri VERSION 0.1 LANGUAGES CXX)
 # pacman -S mingw-w64-x86_64-qt6
 # pacman -S mingw-w64-x86_64-cmake
 
-set(CMAKE_PREFIX_PATH "C:\\msys64\\mingw64\\lib\\cmake") # qt库目录
+# set(CMAKE_PREFIX_PATH "C:\\msys64\\mingw64\\lib\\cmake") # qt库目录
 
 set(CMAKE_AUTOUIC ON) # 自动编译ui文件
 set(CMAKE_AUTOMOC ON) # 自动编译moc文件
@@ -27,12 +27,26 @@ INCLUDE_DIRECTORIES(
     ${PROJECT_SOURCE_DIR}
 )
 
-file(GLOB HEAD_FILE ${PROJECT_SOURCE_DIR}/include/*.h)
-file(GLOB SRC_FILE ${PROJECT_SOURCE_DIR}/src/*.cpp)
-file(GLOB UI_FILE ${PROJECT_SOURCE_DIR}/ui/*.ui)
+file(GLOB HEAD_FILE 
+    ${PROJECT_SOURCE_DIR}/include/*.h
+    ${PROJECT_SOURCE_DIR}/include/share/*.h
+    ${PROJECT_SOURCE_DIR}/include/menu/*.h
+)
+
+file(GLOB SRC_FILE 
+    ${PROJECT_SOURCE_DIR}/src/*.cpp
+    ${PROJECT_SOURCE_DIR}/src/share/*.cpp
+    ${PROJECT_SOURCE_DIR}/src/menu/*.cpp
+)
+file(GLOB HPP_FILE ${PROJECT_SOURCE_DIR}/src/*.hpp)
+file(GLOB UI_FILE 
+    ${PROJECT_SOURCE_DIR}/ui/*.ui
+    ${PROJECT_SOURCE_DIR}/src/ui/*.ui
+    # ${PROJECT_SOURCE_DIR}/include/ui/*.ui
+)
 file(GLOB QRC_FILE ${PROJECT_SOURCE_DIR}/qrc/*.qrc)
 
-set(LIB_FILES ${HEAD_FILE} ${SRC_FILE}  ${UI_FILE} ${QRC_FILE} )
+set(LIB_FILES ${HEAD_FILE} ${SRC_FILE}  ${UI_FILE} ${QRC_FILE} ${HPP_FILE} )
 
 # 添加项目文件
 set(PROJECT_SOURCES

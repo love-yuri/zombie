@@ -1,5 +1,19 @@
 <RCC>
     <qresource prefix="/">
-        
+        <file>startMenu/button.png</file>
+        <file>startMenu/we.png</file>
+        <file>startMenu/yes.png</file>
+        <file>startMenu/MainMenu.png</file>
+        <file>startMenu/setting.png</file>
+        <file>startMenu/button(click).png</file>
+        <file>startMenu/message.png</file>
+        <file>startMenu/adventure.png</file>
+        <file>startMenu/setting(click).png</file>
+        <file>startMenu/adventure(click).png</file>
+        <file>startMenu/checkBox.png</file>
+        <file>startMenu/checkBox(click).png</file>
+        <file>startMenu/settingBody.png</file>
+        <file>startMenu/yes(click).png</file>
+        <file>startMenu/we(click).png</file>
     </qresource>
 </RCC>

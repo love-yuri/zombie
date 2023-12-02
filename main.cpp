@@ -1,5 +1,12 @@
+/*
+ * @Author: love-yuri yuri2078170658@gmail.com
+ * @Date: 2023-11-30 22:31:31
+ * @LastEditTime: 2023-12-02 17:36:59
+ * @Description: 启动函数
+ */
 #include <QApplication>
 #include <QTranslator>
+#include <hpp/tools.hpp>
 #include "include/mainwindow.h"
 
 int main(int argc, char *argv[]) {
@@ -14,6 +21,7 @@ int main(int argc, char *argv[]) {
       break;
     }
   }
+  yuri::Tools::init();
   MainWindow window;
   return a.exec();
 }
