@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/">
+
+        <file>map.png</file>
+
         <file>startMenu/button.png</file>
         <file>startMenu/we.png</file>
         <file>startMenu/yes.png</file>
@@ -15,5 +18,33 @@
         <file>startMenu/settingBody.png</file>
         <file>startMenu/yes(click).png</file>
         <file>startMenu/we(click).png</file>
+
+        <file>choose/game_start.png</file>
+        <file>choose/choose_card.png</file>
+        <file>choose/card_solt.png</file>
+        <file>choose/game_start_click.png</file>
+
+        <file>cards/wallnut_g.png</file>
+        <file>cards/csquash_g.png</file>
+        <file>cards/dazui.png</file>
+        <file>cards/dazui_g.png</file>
+        <file>cards/pea_g.png</file>
+        <file>cards/squash.png</file>
+        <file>cards/spikeweed.png</file>
+        <file>cards/repeaterpea.png</file>
+        <file>cards/pea.png</file>
+        <file>cards/wallnut.png</file>
+        <file>cards/tallnut.png</file>
+        <file>cards/spikeweed_g.png</file>
+        <file>cards/potatomine.png</file>
+        <file>cards/potato_g.png</file>
+        <file>cards/sunflower_g.png</file>
+        <file>cards/cherry_g.png</file>
+        <file>cards/cherry.png</file>
+        <file>cards/tallnut_g.png</file>
+        <file>cards/doublePea_g.png</file>
+        <file>cards/sunflower.png</file>
+
+
     </qresource>
 </RCC>

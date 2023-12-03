@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-09-27 13:27:55
- * @LastEditTime: 2023-12-02 20:42:25
+ * @LastEditTime: 2023-12-03 17:54:18
  * @Description:
  */
 
@@ -15,6 +15,7 @@
 #include <qpainter.h>
 #include "hpp/tools.hpp"
 #include <QDialog>
+#include "include/game.h"
 #include "include/menu/info_dialog.h"
 #include "include/menu/setting_dialog.h"
 
@@ -25,7 +26,6 @@ MainWindow::MainWindow(QMainWindow *parent) :
   info_dialog(new InfoDialog(this)) {
   ui->setupUi(this);
   setFixedSize(QSize(800, 600));
-
 
   /* 初始化 */
   menuInit();
@@ -47,16 +47,25 @@ MainWindow::~MainWindow() {
 void MainWindow::menuInit() {
   isShow = false;
   connect(ui->setting, &MenuLabel::clicked, this, [this]() {
-    if(!isShow) {
+    if (!isShow) {
       isShow = true;
       setting_dialog->exec();
       isShow = false;
     }
   });
   connect(ui->we, &MenuLabel::clicked, this, [this]() {
-    if(!isShow) {
+    if (!isShow) {
       isShow = true;
       info_dialog->exec();
+      isShow = false;
+    }
+  });
+
+  connect(ui->adventure, &MenuLabel::clicked, this, [this]() {
+    if (!isShow) {
+      isShow = true;
+      Game *game = new Game(this);
+      game->show();
       isShow = false;
     }
   });

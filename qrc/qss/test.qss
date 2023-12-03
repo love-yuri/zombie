@@ -1,17 +1,6 @@
 #centralwidget {
   border-image: url(:/startMenu/MainMenu.png);
 }
-
-#adventure {
-  border-image: url(:/startMenu/adventure.png);
+#gamewindow {
+  background-color: transparent;
 }
-
-#setting {
-  border-image: url(:/startMenu/setting.png);
-}
-
-#we {
-  border-image: url(:/startMenu/we.png);
-}
-
-
