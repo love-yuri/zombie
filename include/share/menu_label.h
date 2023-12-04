@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-02 11:49:50
- * @LastEditTime: 2023-12-02 18:38:58
+ * @LastEditTime: 2023-12-04 17:07:02
  * @Description: 重写点击按钮
  */
 
@@ -16,6 +16,7 @@ class MenuLabel : public QLabel {
 
 public:
   MenuLabel(QWidget *parent = nullptr);
+  MenuLabel(QWidget *parent, QString bgImg);
   virtual ~MenuLabel();
 
   void setIsButton(bool isButton);

@@ -1,22 +1,32 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-02 11:49:50
- * @LastEditTime: 2023-12-02 20:26:54
+ * @LastEditTime: 2023-12-04 17:30:57
  * @Description: 菜单label
  *
  */
 
 #include "include/share/menu_label.h"
 #include <QRegularExpression>
+#include <qpixmap.h>
 #include "hpp/tools.hpp"
 
 MenuLabel::MenuLabel(QWidget *parent) :
   QLabel(parent) {
+  isButton = false;
+  m_isClicked = false;
+}
+
+MenuLabel::MenuLabel(QWidget *parent, QString bgImg) :
+  QLabel(parent), bgImg(bgImg) {
+  isButton = false;
+  m_isClicked = false;
+  resize(QPixmap(bgImg).size());
+  setStyleSheet(QString("border-image: url(%1.png);").arg(bgImg));
+  show();
 }
 
 MenuLabel::~MenuLabel() {
-  isButton = false;
-  m_isClicked = false;
 }
 
 void MenuLabel::setIsButton(bool isButton) {
@@ -28,9 +38,9 @@ bool MenuLabel::isClicked() const {
 }
 
 void MenuLabel::mousePressEvent(QMouseEvent *ev) {
-  if (bgImg == nullptr || bgImg.isEmpty()) {
+  if (bgImg.isEmpty()) {
     QString inputString = styleSheet();
-    int startIndex = inputString.indexOf(":/startMenu/") + QString(":/startMenu/").length();
+    int startIndex = inputString.indexOf("url(") + QString("url(").length();
     int endIndex = inputString.indexOf(".png", startIndex);
 
     // 提取文件名
@@ -41,20 +51,20 @@ void MenuLabel::mousePressEvent(QMouseEvent *ev) {
   m_isClicked = !m_isClicked;
   if (isButton) {
     if (m_isClicked) {
-      setStyleSheet(QString("border-image: url(:/startMenu/%1(click).png);").arg(bgImg));
+      setStyleSheet(QString("border-image: url(%1(click).png);").arg(bgImg));
     } else {
-      setStyleSheet(QString("border-image: url(:/startMenu/%1.png);").arg(bgImg));
+      setStyleSheet(QString("border-image: url(%1.png);").arg(bgImg));
     }
     emit clicked();
   } else {
-    setStyleSheet(QString("border-image: url(:/startMenu/%1(click).png);").arg(bgImg));
+    setStyleSheet(QString("border-image: url(%1(click).png);").arg(bgImg));
   }
   QLabel::mousePressEvent(ev);
 }
 
 void MenuLabel::mouseReleaseEvent(QMouseEvent *ev) {
   if (!isButton) {
-    setStyleSheet(QString("border-image: url(:/startMenu/%1.png);").arg(bgImg));
+    setStyleSheet(QString("border-image: url(%1.png);").arg(bgImg));
     emit clicked();
   }
   QLabel::mouseReleaseEvent(ev);

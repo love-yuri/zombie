@@ -1,12 +1,13 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-03 16:31:01
- * @LastEditTime: 2023-12-03 23:03:15
+ * @LastEditTime: 2023-12-04 17:12:09
  * @Description: 游戏开始
  */
 #include "include/game.h"
 #include "hpp/tools.hpp"
 #include "include/gamewindow.h"
+#include "include/share/menu_label.h"
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
@@ -26,7 +27,6 @@
 Game::Game(QMainWindow *parent) :
   QMainWindow(parent), scene(new QGraphicsScene(this)), view(new QGraphicsView(scene)) {
   setFixedSize(900, 620);
-
   /* init */
   init();
   windowInit();
@@ -66,6 +66,5 @@ void Game::windowInit() {
   proxyWidget->setZValue(1);
   proxyWidget->setPos(500, 0);
   scene->addItem(proxyWidget);
-
   view->setRenderHint(QPainter::Antialiasing);
 }
