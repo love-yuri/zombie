@@ -45,6 +45,40 @@
         <file>cards/doublePea_g.png</file>
         <file>cards/sunflower.png</file>
 
+        <file>config/plant.json</file>
+
+        <file>plants/Potato/PotatoMine.gif</file>
+        <file>plants/Potato/PotatoMine_mashed.gif</file>
+        <file>plants/nut/Wallnut_cracked2.gif</file>
+        <file>plants/nut/Wallnut_cracked1.gif</file>
+        <file>plants/nut/nut.gif</file>
+        <file>plants/doublePea.gif</file>
+        <file>plants/sunflower.gif</file>
+        <file>plants/Spikeweed.gif</file>
+        <file>plants/cherry.gif</file>
+        <file>plants/pea.gif</file>
+        <file>plants/PeaBulletHit.gif</file>
+        <file>plants/squash/SquashAttack.gif</file>
+        <file>plants/squash/squash.gif</file>
+        <file>plants/dazui/ChomperDigest.gif</file>
+        <file>plants/dazui/ChomperAttack.gif</file>
+        <file>plants/dazui/1.gif</file>
+        <file>plants/bullet_normal.png</file>
+        <file>plants/Boom.gif</file>
+        <file>plants/tallnut/TallnutCracked1.gif</file>
+        <file>plants/tallnut/TallNut.gif</file>
+        <file>plants/tallnut/TallnutCracked2.gif</file>
+
+        <file>rest/Squash1.gif</file>
+        <file>rest/Spikeweed1.gif</file>
+        <file>rest/SunFlower1.gif</file>
+        <file>rest/Repeater1.gif</file>
+        <file>rest/Chomper1.gif</file>
+        <file>rest/TallNut1.gif</file>
+        <file>rest/WallNut1.gif</file>
+        <file>rest/PotatoMine1.gif</file>
+        <file>rest/CherryBomb1.gif</file>
+        <file>rest/Peashooter1.gif</file>
 
     </qresource>
 </RCC>

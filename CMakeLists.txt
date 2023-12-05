@@ -31,12 +31,16 @@ file(GLOB HEAD_FILE
     ${PROJECT_SOURCE_DIR}/include/*.h
     ${PROJECT_SOURCE_DIR}/include/share/*.h
     ${PROJECT_SOURCE_DIR}/include/menu/*.h
+    ${PROJECT_SOURCE_DIR}/include/manager/*.h
+    ${PROJECT_SOURCE_DIR}/include/plants/*.h
 )
 
 file(GLOB SRC_FILE 
     ${PROJECT_SOURCE_DIR}/src/*.cpp
     ${PROJECT_SOURCE_DIR}/src/share/*.cpp
     ${PROJECT_SOURCE_DIR}/src/menu/*.cpp
+    ${PROJECT_SOURCE_DIR}/src/manager/*.cpp
+    ${PROJECT_SOURCE_DIR}/src/plants/*.cpp
 )
 file(GLOB HPP_FILE ${PROJECT_SOURCE_DIR}/src/*.hpp)
 file(GLOB UI_FILE 

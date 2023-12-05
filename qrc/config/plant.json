@@ -1,0 +1,62 @@
+[
+  {
+    "name": "cherry",
+    "img": ":/cards/cherry.png",
+    "img_g": ":/cards/cherry_g.png",
+    "img_drop": ":/rest/CherryBomb1.gif"
+  },
+  {
+    "name": "dazui",
+    "img": ":/cards/dazui.png",
+    "img_g": ":/cards/dazui_g.png",
+    "img_drop": ":/rest/Chomper1.gif"
+  },
+  {
+    "name": "squash",
+    "img": ":/cards/squash.png",
+    "img_g": ":/cards/squash_g.png",
+    "img_drop": ":/rest/Squash1.gif"
+  },
+  {
+    "name": "spikeweed",
+    "img": ":/cards/spikeweed.png",
+    "img_g": ":/cards/spikeweed_g.png",
+    "img_drop": ":/rest/Spikeweed1.gif"
+  },
+  {
+    "name": "repeaterpea",
+    "img": ":/cards/repeaterpea.png",
+    "img_g": ":/cards/repeaterpea_g.png",
+    "img_drop": ":/rest/Peashooter1.gif"
+  },
+  {
+    "name": "pea",
+    "img": ":/cards/pea.png",
+    "img_g": ":/cards/pea_g.png",
+    "img_drop": ":/rest/Peashooter1.gif"
+  },
+  {
+    "name": "wallnut",
+    "img": ":/cards/wallnut.png",
+    "img_g": ":/cards/wallnut_g.png",
+    "img_drop": ":/rest/WallNut1.gif"
+  },
+  {
+    "name": "tallnut",
+    "img": ":/cards/tallnut.png",
+    "img_g": ":/cards/tallnut_g.png",
+    "img_drop": ":/rest/TallNut1.gif"
+  },
+  {
+    "name": "potatomine",
+    "img": ":/cards/potatomine.png",
+    "img_g": ":/cards/potatomine_g.png",
+    "img_drop": ":/rest/PotatoMine1.gif"
+  },
+  {
+    "name": "sunflower",
+    "img": ":/cards/sunflower.png",
+    "img_g": ":/cards/sunflower_g.png",
+    "img_drop": ":/rest/SunFlower1.gif"
+  }
+]

@@ -1,10 +1,11 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-04 17:41:17
- * @LastEditTime: 2023-12-04 22:41:37
+ * @LastEditTime: 2023-12-05 20:33:06
  * @Description:
  */
 #include "include/share/card_item.h"
+#include "include/manager/card_manager.h"
 #include "hpp/tools.hpp"
 
 #include <QPainter>
@@ -20,15 +21,15 @@
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qsize.h>
-CardItem::CardItem() :
-  pixmap(new QPixmap(45, 65)) {
+CardItem::CardItem(CardManager *manager, int id) :
+  id(id), pixmap(new QPixmap(45, 65)), manager(manager) {
   setAcceptedMouseButtons(Qt::LeftButton);
   pixmap->fill(QColor(0, 0, 0, 60));
   setAcceptDrops(true);
   setZValue(5);
 }
-CardItem::CardItem(QString fileName) :
-  pixmap(new QPixmap(fileName)), fileName(fileName) {
+CardItem::CardItem(CardManager *manager, QString file_name, int id) :
+  pixmap(new QPixmap(file_name)), file_name(file_name), id(id), manager(manager) {
   setAcceptedMouseButtons(Qt::LeftButton);
   QPixmap p(pixmap->scaled(QSize(45, 65)));
   pixmap->swap(p);
@@ -51,12 +52,21 @@ void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
   painter->drawPixmap(pixmap->rect(), *pixmap);
 }
 
+void CardItem::clear() {
+  QPixmap img(45, 65);
+  img.fill(QColor(0, 0, 0, 60));
+  pixmap->swap(img);
+  file_name.clear();
+  name_y.clear();
+  update();
+}
+
 void CardItem::mousePressEvent(QGraphicsSceneMouseEvent *) {
   // qinfo << "点击";
 }
 
 void CardItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
-  if (fileName.isEmpty()) {
+  if (file_name.isEmpty()) {
     return;
   }
   if (QLineF(event->screenPos(), event->buttonDownScreenPos(Qt::LeftButton))
@@ -70,7 +80,7 @@ void CardItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
   QPixmap pix(pixmap->size());
   QPainter painter(&pix);
   paint(&painter, nullptr, nullptr);
-  mimeData->setText(fileName);
+  mimeData->setText(QString("%1").arg(id));
   darg->setPixmap(pix);
   darg->exec();
   // qinfo << "结束" << event->isAccepted();
@@ -89,8 +99,18 @@ void CardItem::dragLeaveEvent(QGraphicsSceneDragDropEvent *event) {
 }
 
 void CardItem::dropEvent(QGraphicsSceneDragDropEvent *event) {
-  QPixmap img(QPixmap(event->mimeData()->text()).scaled(QSize(45, 65)));
+  if (!file_name.isEmpty()) {
+    return;
+  }
+  CardItem *item = manager->plantVec().at(event->mimeData()->text().toInt());
+  file_name = item->fileName();
+  name_y = item->name();
+  QPixmap img(QPixmap(file_name).scaled(QSize(45, 65)));
   pixmap->swap(img);
-  fileName = event->mimeData()->text();
+  item->clear();
   update();
+}
+
+const QString &CardItem::fileName() const {
+  return file_name;
 }

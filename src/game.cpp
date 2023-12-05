@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-03 16:31:01
- * @LastEditTime: 2023-12-04 17:12:09
+ * @LastEditTime: 2023-12-05 21:36:33
  * @Description: 游戏开始
  */
 #include "include/game.h"
@@ -46,7 +46,7 @@ void Game::init() {
   widget->setLayout(layout);
   layout->setContentsMargins(0, 0, 0, 0);
   setCentralWidget(widget);
-  // view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+  view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   QTimer *timer = new QTimer(this);
   timer->setInterval(10);
   scroll = view->horizontalScrollBar();
@@ -61,10 +61,24 @@ void Game::init() {
 /* 初始化游戏界面窗口 */
 void Game::windowInit() {
   QGraphicsProxyWidget *proxyWidget = new QGraphicsProxyWidget;
-  GameWindow *widget = new GameWindow();
-  proxyWidget->setWidget(widget);
+  GameWindow *game = new GameWindow();
+  proxyWidget->setWidget(game);
   proxyWidget->setZValue(1);
   proxyWidget->setPos(500, 0);
   scene->addItem(proxyWidget);
   view->setRenderHint(QPainter::Antialiasing);
+
+  connect(game, &GameWindow::gameStart, [this,game, proxyWidget]() {
+    QTimer *timer = new QTimer(this);
+    timer->setInterval(1);
+    timer->start();
+    connect(timer, &QTimer::timeout, [this, game, timer, proxyWidget]() {
+      scroll->setValue(scroll->value() - 1);
+      proxyWidget->setPos(proxyWidget->pos().x() - 1, proxyWidget->pos().y());
+      if (scroll->value() == 150) {
+        game->start();
+        timer->stop();
+      }
+    });
+  });
 }
