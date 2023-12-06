@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-05 17:37:15
- * @LastEditTime: 2023-12-05 22:24:27
+ * @LastEditTime: 2023-12-06 09:55:09
  * @Description: 植物卡片
  */
 
@@ -24,7 +24,7 @@
 #include <qsize.h>
 PlantCard::PlantCard(QString file_name, QString file_name_drop) :
   pixmap(QPixmap(file_name).scaled(45, 65)),
-  drop_pixmap(QPixmap(file_name_drop).scaled(95, 95)) {
+  drop_pixmap(QPixmap(file_name_drop).scaled(60, 60)) {
   setAcceptedMouseButtons(Qt::LeftButton);
   setAcceptDrops(true);
 }

@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-03 16:31:01
- * @LastEditTime: 2023-12-05 21:36:33
+ * @LastEditTime: 2023-12-06 20:11:57
  * @Description: 游戏开始
  */
 #include "include/game.h"
@@ -33,6 +33,7 @@ Game::Game(QMainWindow *parent) :
 }
 
 Game::~Game() {
+  
 }
 
 void Game::init() {
@@ -68,7 +69,7 @@ void Game::windowInit() {
   scene->addItem(proxyWidget);
   view->setRenderHint(QPainter::Antialiasing);
 
-  connect(game, &GameWindow::gameStart, [this,game, proxyWidget]() {
+  connect(game, &GameWindow::gameStart, [this, game, proxyWidget]() {
     QTimer *timer = new QTimer(this);
     timer->setInterval(1);
     timer->start();

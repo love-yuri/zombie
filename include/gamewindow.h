@@ -9,6 +9,7 @@
 
 #include "include/game.h"
 #include "include/manager/card_manager.h"
+#include "include/manager/game_manager.h"
 #include <QWidget>
 #include <qgraphicsscene.h>
 #include <qgraphicsview.h>
@@ -43,6 +44,7 @@ private:
 
   /* manager */
   CardManager *card_manager;
+  GameManager *game_manager;
 
   /* init func */
   void init();

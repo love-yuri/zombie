@@ -33,6 +33,7 @@ file(GLOB HEAD_FILE
     ${PROJECT_SOURCE_DIR}/include/menu/*.h
     ${PROJECT_SOURCE_DIR}/include/manager/*.h
     ${PROJECT_SOURCE_DIR}/include/plants/*.h
+    ${PROJECT_SOURCE_DIR}/include/zombie/*.h
 )
 
 file(GLOB SRC_FILE 
@@ -41,6 +42,7 @@ file(GLOB SRC_FILE
     ${PROJECT_SOURCE_DIR}/src/menu/*.cpp
     ${PROJECT_SOURCE_DIR}/src/manager/*.cpp
     ${PROJECT_SOURCE_DIR}/src/plants/*.cpp
+    ${PROJECT_SOURCE_DIR}/src/zombie/*.cpp
 )
 file(GLOB HPP_FILE ${PROJECT_SOURCE_DIR}/src/*.hpp)
 file(GLOB UI_FILE 

@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-09-27 13:27:55
- * @LastEditTime: 2023-12-03 17:54:18
+ * @LastEditTime: 2023-12-06 20:11:44
  * @Description:
  */
 
@@ -64,8 +64,14 @@ void MainWindow::menuInit() {
   connect(ui->adventure, &MenuLabel::clicked, this, [this]() {
     if (!isShow) {
       isShow = true;
-      Game *game = new Game(this);
+      Game *game = new Game();
       game->show();
+      this->hide();
+      connect(game, &Game::closed, this, [this, game]() {
+        game->disconnect();
+        show();
+        delete game;
+      });
       isShow = false;
     }
   });

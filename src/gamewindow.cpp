@@ -1,11 +1,12 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-03 22:56:48
- * @LastEditTime: 2023-12-05 22:15:47
+ * @LastEditTime: 2023-12-06 21:45:19
  * @Description: 游戏界面
  */
 #include "include/gamewindow.h"
 #include "include/manager/card_manager.h"
+#include "include/manager/game_manager.h"
 #include "include/manager/plant_config.h"
 #include "include/plants/plant_card.h"
 #include "include/plants/plant_slot.h"
@@ -13,6 +14,8 @@
 #include "include/share/card_item.h"
 #include "hpp/tools.hpp"
 #include "include/share/pixmap_item.h"
+#include "include/zombie/zombie.h"
+#include <qcontainerfwd.h>
 #include <qgraphicsitem.h>
 #include <qgraphicsview.h>
 #include <QGraphicsProxyWidget>
@@ -21,6 +24,7 @@
 #include <qnamespace.h>
 #include <qpixmap.h>
 #include <QMovie>
+#include <qpoint.h>
 #include <qsize.h>
 #include <qtimer.h>
 #include <qtypes.h>
@@ -28,9 +32,10 @@
 
 GameWindow::GameWindow(QWidget *parent) :
   QWidget(parent),
-  scene(new QGraphicsScene()),
+  scene(new QGraphicsScene(this)),
   view(new QGraphicsView(scene)),
-  card_manager(new CardManager(this, scene)) {
+  card_manager(new CardManager(this, scene)),
+  game_manager(new GameManager(this)) {
   setFixedSize(900, 600);
   setObjectName("gamewindow");
   setStyleSheet(" \
@@ -87,7 +92,7 @@ void GameWindow::init() {
       delete choose_card;
       delete start;
       for (int i = 0; i < plants.size(); i++) {
-        PlantConfig::Plant plant = PlantConfig::allPlants().value(plants[i]);
+        PlantConfig::PlantData plant = PlantConfig::allPlants().value(plants[i]);
         PlantCard *card = new PlantCard(plant.img, plant.img_drop);
         card->setPos(78 + i * (130 - 78), 8);
         card->setPlantName(plant.name);
@@ -99,11 +104,20 @@ void GameWindow::init() {
 
 /* 游戏开始 */
 void GameWindow::start() {
-  for (int i = 0; i < 5; i++) {
-    for (int j = 0; j < 9; j++) {
-      PlantSlot *slot = new PlantSlot();
-      slot->setPos(77 + j * 84, 90 + i * 94);
+  int i = -1;
+  for (QVector<QPoint> points : game_manager->posMap()) {
+    int j = -1;
+    i++;
+    for (QPoint point : points) {
+      j++;
+      PlantSlot *slot = new PlantSlot(scene, game_manager);
+      slot->setPos(point);
+      slot->ij = QPoint(i, j);
       scene->addItem(slot);
     }
   }
+  Zombie *zombie = new Zombie();
+  zombie->setPos(600, 200);
+  zombie->setParent(this);
+  scene->addItem(zombie);
 }
