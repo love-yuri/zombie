@@ -46,6 +46,7 @@
         <file>cards/sunflower.png</file>
 
         <file>config/plant.json</file>
+        <file>config/zombie.json</file>
 
         <file>plants/Potato/PotatoMine.gif</file>
         <file>plants/Potato/PotatoMine_mashed.gif</file>
@@ -79,6 +80,17 @@
         <file>rest/PotatoMine1.gif</file>
         <file>rest/CherryBomb1.gif</file>
         <file>rest/Peashooter1.gif</file>
+
+        <file>zombie/coneZombie/ConeheadZombieAttack.gif</file>
+        <file>zombie/coneZombie/ConeheadZombie.gif</file>
+        <file>zombie/normalZombie/ZombieLostHeadAttack.gif</file>
+        <file>zombie/normalZombie/ZombieHead.gif</file>
+        <file>zombie/normalZombie/ZombieLostHead.gif</file>
+        <file>zombie/normalZombie/Zombie.gif</file>
+        <file>zombie/normalZombie/ZombieDie.gif</file>
+        <file>zombie/normalZombie/ZombieAttack.gif</file>
+        <file>zombie/bucketZombie/BucketheadZombie.gif</file>
+        <file>zombie/bucketZombie/BucketheadZombieAttack.gif</file>
 
     </qresource>
 </RCC>

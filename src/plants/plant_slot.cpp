@@ -6,6 +6,8 @@
  */
 
 #include "include/plants/plant_slot.h"
+#include "include/plants/plant.h"
+#include "include/manager/game_manager.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QApplication>
 #include <QDrag>
@@ -23,7 +25,8 @@
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qsize.h>
-PlantSlot::PlantSlot(QGraphicsScene *scene, GameManager *manager) : scene(scene), manager(manager) {
+PlantSlot::PlantSlot(QGraphicsScene *scene, GameManager *manager) :
+  scene(scene), manager(manager) {
   setAcceptDrops(true);
   pixmap = QPixmap(81, 81);
   pixmap.fill(QColor(0, 0, 0, 0));
@@ -51,7 +54,14 @@ void PlantSlot::dropEvent(QGraphicsSceneDragDropEvent *event) {
   PlantConfig::PlantData plant = PlantConfig::allPlants().value(event->mimeData()->text());
   auto type_map = PlantConfig::typeMap();
   PlantConfig::PlantType type = type_map.value(plant.name);
-  Plant *p = PlantConfig::createPlant(type, this, plant);
+  QSharedPointer<Plant> p = PlantConfig::createPlant(type, this, plant);
+  manager->addPlant(p);
+  connect(p.data(), &Plant::deathed, [this]() {
+    pixmap = QPixmap(81, 81);
+    pixmap.fill(QColor(0, 0, 0, 0));
+    movie = nullptr;
+    update();
+  });
   //   QMovie * backgroundGifMovie = new QMovie(this);
 
   // movie = new QMovie(plant.default_state);

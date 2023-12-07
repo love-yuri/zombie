@@ -1,11 +1,12 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-05 18:44:37
- * @LastEditTime: 2023-12-06 18:14:24
+ * @LastEditTime: 2023-12-07 21:52:02
  * @Description: 全局配置类
  */
 #include "include/manager/plant_config.h"
 #include "hpp/tools.hpp"
+#include <QSharedPointer>
 #include "include/plants/pea.h"
 #include "include/plants/plant_slot.h"
 #include <QJsonArray>
@@ -33,13 +34,20 @@ void PlantConfig::loadConfig() {
   } else {
     QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
     // this->json = new QVariantMap(doc.array().toVariantList());
+
+    /* 读取配置文件 */
     for (auto j : doc.array()) {
-      PlantData plant{
+      PlantData plant {
         .name = j.toObject()["name"].toString(),
         .img = j.toObject()["img"].toString(),
         .img_g = j.toObject()["img_g"].toString(),
         .img_drop = j.toObject()["img_drop"].toString(),
         .default_state = j.toObject()["default_state"].toString(),
+        .blod = j.toObject()["blod"].toInt(),
+        .hurt = j.toObject()["hurt"].toInt(),
+        .sum = j.toObject()["sum"].toInt(),
+        .cd = j.toObject()["cd"].toInt(),
+        .interval = j.toObject()["interval"].toInt(),
       };
       plants.insert(plant.name, plant);
     }
@@ -53,9 +61,9 @@ const QMap<QString, PlantConfig::PlantData> &PlantConfig::allPlants() {
   return plants;
 }
 
-Plant *PlantConfig::createPlant(PlantConfig::PlantType type, PlantSlot *slot, PlantConfig::PlantData data) {
+QSharedPointer<Plant> PlantConfig::createPlant(PlantConfig::PlantType type, PlantSlot *slot, PlantConfig::PlantData data) {
   switch (type) {
-    case PlantConfig::PEA: return new Pea(slot, data);
+    case PlantConfig::PEA: return QSharedPointer<Plant>(new Pea(slot, data));
   default:
     return nullptr;
   }

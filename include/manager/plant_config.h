@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-05 18:42:32
- * @LastEditTime: 2023-12-06 18:14:45
+ * @LastEditTime: 2023-12-07 21:47:39
  * @Description: 植物配置文件读物
  */
 
@@ -19,13 +19,17 @@
 class Plant;
 class PlantConfig {
 public:
-  // mysql 结构体
   typedef struct {
     QString name;
     QString img;
     QString img_g;
     QString img_drop;
     QString default_state;
+    int blod; // 血量
+    int hurt; // 伤害
+    int sum; // 需要阳光
+    int cd; // 冷却
+    int interval; // 攻击频率
   } PlantData;
 
   enum PlantType {
@@ -47,7 +51,7 @@ public:
     return type_map;
   }
 
-  static Plant *createPlant(PlantType, PlantSlot*, PlantConfig::PlantData);
+  static QSharedPointer<Plant> createPlant(PlantType, PlantSlot*, PlantConfig::PlantData);
 
 private:
   static void loadConfig();

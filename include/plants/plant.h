@@ -1,8 +1,8 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 11:04:50
- * @LastEditTime: 2023-12-06 21:40:14
- * @Description: 植物基类 
+ * @LastEditTime: 2023-12-07 22:33:38
+ * @Description: 植物基类
  */
 #ifndef PLANT_H
 #define PLANT_H
@@ -13,35 +13,47 @@
 #include <qgraphicsscene.h>
 #include <qpixmap.h>
 #include <qpoint.h>
+#include <qtimer.h>
+#include <qtmetamacros.h>
 
+class Zombie;
 class Plant : public QObject {
+  Q_OBJECT
 public:
-  Plant(PlantSlot *slot, PlantConfig::PlantData plantData);
-  virtual ~Plant() = default;
+  using plant_ptr = QSharedPointer<Plant>;
+  using zombie_ptr = QSharedPointer<Zombie>;
+  
+  Plant(PlantSlot *slot, const PlantConfig::PlantData &plantData);
+  virtual ~Plant();
 
   /* 坐标标识 */
   QPoint ij;
 
-  // /* 植物方法 */
-  // virtual void attack() = 0;
-  // virtual void injuried() = 0;
-  // virtual void death() = 0;
+  /* 植物方法 */
+  virtual void attack() = 0; /* 攻击 */
+  virtual void injuried(int blod) = 0; /* 受伤 */
 
-  bool operator<(const Plant &p) const;
+  inline const PlantSlot *plantSlot() {
+    return slot;
+  }
+
+signals:
+  void deathed(); /* 植物死亡 */
+  void near(); /* 僵尸靠近 */
 
 protected:
   PlantSlot *slot;
   QPixmap *pixmap;
-  PlantConfig::PlantData plantData;
+  QMovie *movie;
+  const PlantConfig::PlantData plantData;
   QGraphicsScene *scene;
   GameManager *manager;
 
   /* 植物属性 */
-  int blod;
-  int hurt;
-  int sum;
-  int cd;
-  int interval;
+  int blod;     // 血量
+
+  /* 定时器 */
+  QTimer *attack_timer;
 };
 
 #endif

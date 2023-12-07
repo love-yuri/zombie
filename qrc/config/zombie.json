@@ -1,1 +1,30 @@
 
+[
+  {
+    "name": "normal",
+    "default_state": ":/zombie/normalZombie/Zombie.gif",
+    "attack_state" : ":/zombie/normalZombie/ZombieAttack.gif",
+    "blod": 2000,
+    "hurt": 100,
+    "speed": 100,
+    "interval": 1000
+  },
+  {
+    "name": "bucket",
+    "default_state": ":/zombie/bucketZombie/BucketheadZombie.gif",
+    "attack_state" : ":/zombie/bucketZombie/BucketheadZombieAttack.gif",
+    "blod": 122,
+    "hurt": 122,
+    "speed": 122,
+    "interval": 1000
+  },
+  {
+    "name": "cone",
+    "default_state": ":/zombie/coneZombie/ConeheadZombie.gif",
+    "attack_state" : ":/zombie/coneZombie/ConeheadZombieAttack.gif",
+    "blod": 122,
+    "hurt": 122,
+    "speed": 122,
+    "interval": 1000
+  }
+]

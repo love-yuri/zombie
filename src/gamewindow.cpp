@@ -1,13 +1,14 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-03 22:56:48
- * @LastEditTime: 2023-12-06 21:45:19
+ * @LastEditTime: 2023-12-07 22:44:50
  * @Description: 游戏界面
  */
 #include "include/gamewindow.h"
 #include "include/manager/card_manager.h"
 #include "include/manager/game_manager.h"
 #include "include/manager/plant_config.h"
+#include "include/manager/zombie_config.h"
 #include "include/plants/plant_card.h"
 #include "include/plants/plant_slot.h"
 #include "include/share/menu_label.h"
@@ -18,6 +19,7 @@
 #include <qcontainerfwd.h>
 #include <qgraphicsitem.h>
 #include <qgraphicsview.h>
+#include <QSharedPointer>
 #include <QGraphicsProxyWidget>
 #include <qlist.h>
 #include <QScrollBar>
@@ -35,7 +37,7 @@ GameWindow::GameWindow(QWidget *parent) :
   scene(new QGraphicsScene(this)),
   view(new QGraphicsView(scene)),
   card_manager(new CardManager(this, scene)),
-  game_manager(new GameManager(this)) {
+  game_manager(new GameManager(this, scene)) {
   setFixedSize(900, 600);
   setObjectName("gamewindow");
   setStyleSheet(" \
@@ -55,6 +57,12 @@ GameWindow::GameWindow(QWidget *parent) :
 }
 
 GameWindow::~GameWindow() {
+  /* 提前断开和scens的关系, 防止智能指针重复析构 */
+  for (QList<QSharedPointer<Zombie>> zombies : game_manager->zombieList()) {
+    for (const QSharedPointer<Zombie> zombie : zombies) {
+      scene->removeItem(zombie.data());
+    }
+  }
 }
 
 void GameWindow::init() {
@@ -116,8 +124,11 @@ void GameWindow::start() {
       scene->addItem(slot);
     }
   }
-  Zombie *zombie = new Zombie();
-  zombie->setPos(600, 200);
-  zombie->setParent(this);
-  scene->addItem(zombie);
+  i = 0;
+  for (QPoint point : game_manager->zombiePos()) {
+    QSharedPointer<Zombie> zombie = ZombieConfig::createZombie(ZombieConfig::NAORMAL, game_manager, i++);
+    zombie->setPos(point);
+    game_manager->addZombie(zombie);
+    scene->addItem(zombie.data());
+  }
 }

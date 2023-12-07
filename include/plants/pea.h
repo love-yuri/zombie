@@ -1,3 +1,9 @@
+/*
+ * @Author: love-yuri yuri2078170658@gmail.com
+ * @Date: 2023-12-06 17:50:06
+ * @LastEditTime: 2023-12-07 21:23:52
+ * @Description: 豌豆射手
+ */
 #ifndef PEA_H
 #define PEA_H
 
@@ -12,8 +18,11 @@ public:
   Pea(PlantSlot *slot, PlantConfig::PlantData plantData);
   virtual ~Pea();
 
-private:
-  QMovie *movie;
+protected:
+  virtual void attack() override;
+  virtual void injuried(int blod) override;
+
+  void destory();
 };
 
 #endif

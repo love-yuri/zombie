@@ -4,69 +4,119 @@
     "img": ":/cards/cherry.png",
     "img_g": ":/cards/cherry_g.png",
     "img_drop": ":/rest/CherryBomb1.gif",
-    "default_state": ":/plants/cherry.gif"
+    "default_state": ":/plants/cherry.gif",
+    "blod": 1000,
+    "hurt": 122,
+    "sum": 122,
+    "cd": 122,
+    "interval": 1000
   },
   {
     "name": "dazui",
     "img": ":/cards/dazui.png",
     "img_g": ":/cards/dazui_g.png",
     "img_drop": ":/rest/Chomper1.gif",
-    "default_state": ":/plants/dazui/1.gif"
+    "default_state": ":/plants/dazui/1.gif",
+    "blod": 1000,
+    "hurt": 122,
+    "sum": 122,
+    "cd": 122,
+    "interval": 1000
   },
   {
     "name": "squash",
     "img": ":/cards/squash.png",
     "img_g": ":/cards/squash_g.png",
     "img_drop": ":/rest/Squash1.gif",
-    "default_state": ":/plants/squash/squash.gif"
+    "default_state": ":/plants/squash/squash.gif",
+    "blod": 1000,
+    "hurt": 122,
+    "sum": 122,
+    "cd": 122,
+    "interval": 1000
   },
   {
     "name": "spikeweed",
     "img": ":/cards/spikeweed.png",
     "img_g": ":/cards/spikeweed_g.png",
     "img_drop": ":/rest/Spikeweed1.gif",
-    "default_state": ":/plants/Spikeweed.gif"
+    "default_state": ":/plants/Spikeweed.gif",
+    "blod": 1000,
+    "hurt": 122,
+    "sum": 122,
+    "cd": 122,
+    "interval": 1000
   },
   {
     "name": "repeaterpea",
     "img": ":/cards/repeaterpea.png",
     "img_g": ":/cards/repeaterpea_g.png",
     "img_drop": ":/rest/Peashooter1.gif",
-    "default_state": ":/plants/doublePea.gif"
+    "default_state": ":/plants/doublePea.gif",
+    "blod": 1000,
+    "hurt": 122,
+    "sum": 122,
+    "cd": 122,
+    "interval": 1000
   },
   {
     "name": "pea",
     "img": ":/cards/pea.png",
     "img_g": ":/cards/pea_g.png",
     "img_drop": ":/rest/Peashooter1.gif",
-    "default_state": ":/plants/pea.gif"
+    "default_state": ":/plants/pea.gif",
+    "blod": 1000,
+    "hurt": 122,
+    "sum": 122,
+    "cd": 122,
+    "interval": 1000
   },
   {
     "name": "wallnut",
     "img": ":/cards/wallnut.png",
     "img_g": ":/cards/wallnut_g.png",
     "img_drop": ":/rest/WallNut1.gif",
-    "default_state": ":/plants/nut/nut.gif"
+    "default_state": ":/plants/nut/nut.gif",
+    "blod": 1000,
+    "hurt": 122,
+    "sum": 122,
+    "cd": 122,
+    "interval": 1000
   },
   {
     "name": "tallnut",
     "img": ":/cards/tallnut.png",
     "img_g": ":/cards/tallnut_g.png",
     "img_drop": ":/rest/TallNut1.gif",
-    "default_state": ":/plants/tallnut/TallNut.gif"
+    "default_state": ":/plants/tallnut/TallNut.gif",
+    "blod": 1000,
+    "hurt": 122,
+    "sum": 122,
+    "cd": 122,
+    "interval": 1000
   },
   {
     "name": "potatomine",
     "img": ":/cards/potatomine.png",
     "img_g": ":/cards/potatomine_g.png",
     "img_drop": ":/rest/PotatoMine1.gif",
-    "default_state": ":/plants/Potato/PotatoMine.gif"
+    "default_state": ":/plants/Potato/PotatoMine.gif",
+    "blod": 1000,
+    "hurt": 122,
+    "sum": 122,
+    "cd": 122,
+    "interval": 1000
   },
   {
     "name": "sunflower",
     "img": ":/cards/sunflower.png",
     "img_g": ":/cards/sunflower_g.png",
     "img_drop": ":/rest/SunFlower1.gif",
-    "default_state": ":/plants/sunflower.gif"
+    "default_state": ":/plants/sunflower.gif",
+    "blod": 1000,
+    "hurt": 122,
+    "sum": 122,
+    "cd": 122,
+    "interval": 1000
   }
 ]
