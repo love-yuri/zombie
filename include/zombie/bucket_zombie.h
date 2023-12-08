@@ -4,14 +4,14 @@
  * @LastEditTime: 2023-12-08 21:06:04
  * @Description: 普通僵尸
  */
-#ifndef NORMAL_ZOMBIE_h
-#define NORMAL_ZOMBIE_h
+#ifndef BUCKET_ZOMBIE_H
+#define BUCKET_ZOMBIE_H
 
 #include "include/zombie/zombie.h"
 
-class NormalZombie : public Zombie {
+class BucketZombie : public Zombie {
 public:
-  NormalZombie(GameManager *manager, int pos_i, const ZombieData &zombieData);
+  BucketZombie(GameManager *manager, int pos_i, const ZombieData &zombieData);
 
   void attack(QWeakPointer<Plant>) override;
   virtual void injuried(int blod) override;

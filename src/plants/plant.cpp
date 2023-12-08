@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 21:32:53
- * @LastEditTime: 2023-12-07 21:38:04
+ * @LastEditTime: 2023-12-08 21:43:50
  * @Description: 植物基类
  */
 #include "include/plants/plant.h"
@@ -11,7 +11,7 @@
 #include <qtimer.h>
 #include <set>
 
-Plant::Plant(PlantSlot *slot, const PlantConfig::PlantData &data) :
+Plant::Plant(PlantSlot *slot, const PlantData &data) :
   slot(slot), plantData(data), manager(slot->gameManager()), ij(slot->ij), blod(data.blod) {
   this->scene = slot->mutableScene();
   this->pixmap = slot->mutablePixmap();
@@ -31,6 +31,9 @@ Plant::Plant(PlantSlot *slot, const PlantConfig::PlantData &data) :
     attack_timer->start(data.interval);
     connect(attack_timer, &QTimer::timeout, this, &Plant::attack);
   }
+
+  /* 绑定销毁事件,防止出现slot先销毁后出问题的情况更 */
+  connect(slot, &PlantSlot::destory, movie, &QMovie::stop);
 }
 
 Plant::~Plant() {

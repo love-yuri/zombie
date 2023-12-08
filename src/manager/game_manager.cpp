@@ -1,12 +1,17 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 20:46:20
- * @LastEditTime: 2023-12-07 22:57:07
+ * @LastEditTime: 2023-12-08 22:32:19
  * @Description:
  */
 #include "include/manager/game_manager.h"
 #include "hpp/tools.hpp"
+#include "include/manager/global_config.h"
+#include "include/plants/pea.h"
 #include "include/plants/plant.h"
+#include "include/zombie/bucket_zombie.h"
+#include "include/zombie/cone_zombie.h"
+#include "include/zombie/nomal_zombie.h"
 #include "include/zombie/zombie.h"
 #include <qcontainerfwd.h>
 #include <QSharedPointer>
@@ -15,8 +20,8 @@
 #include <qpoint.h>
 #include <qtimer.h>
 
-GameManager::GameManager(QObject *parent, QGraphicsScene *scene) :
-  QObject(parent), scene(scene) {
+GameManager::GameManager(QObject *parent, QGraphicsScene *scene, GlobalConfig *config) :
+  QObject(parent), scene(scene), config(config) {
   /* 初始化位置map */
   for (int i = 0; i < 5; i++) {
     QVector<QPoint> vec;
@@ -32,44 +37,49 @@ GameManager::GameManager(QObject *parent, QGraphicsScene *scene) :
 }
 
 GameManager::~GameManager() {
-  // for (QList<Plant *> plant : plant_list) {
-  //   QString s;
-  //   for (Plant *p : plant) {
-  //     s = QString("%1 %2").arg(s).arg(p->ij.y());
-  //   }
-  //   qinfo << s;
-  // }
-  // for (QList<Zombie *> zombies : zombie_list) {
-  //   QString s;
-  //   for (Zombie *zombie : zombies) {
-  //     s = QString("%1 %2").arg(s).arg(zombie->pos_i);
-  //   }
-  //   qinfo << s;
-  // }
 }
 
-void GameManager::addPlant(plant_ptr plant) {
-  plant_list[plant->ij.x()].push_back(plant);
-  QList<plant_ptr> &list = plant_list[plant->ij.x()];
+plant_ptr GameManager::createPlant(QString name, PlantSlot *slot) {
+  PlantData data = config->plantsData().value(name);
+  plant_ptr plant = nullptr;
+  switch (config->plantsTypeMap().value(name)) {
+  case PEA: plant = QSharedPointer<Plant>(new Pea(slot, data)); break;
+  default:
+    return nullptr;
+  }
+  plant_list[slot->ij.x()].push_back(plant);
+  QList<plant_ptr> &list = plant_list[slot->ij.x()];
   std::sort(list.begin(), list.end(), [](plant_ptr a, plant_ptr b) {
     return a->ij.y() < b->ij.y();
   });
-  qinfo << plant_list[plant->ij.x()].size();
-  connect(plant.data(), &Plant::deathed, [this, plant]() {
-    plant_list[plant->ij.x()].removeOne(plant);
+  QWeakPointer<Plant> weakPlant = plant;
+  connect(plant.data(), &Plant::deathed, [this, weakPlant, slot]() {
+    if (auto plant = weakPlant.lock()) {
+      plant_list[slot->ij.x()].removeOne(plant);
+      plant->attackZombie->restart();
+      plant.clear();
+    }
   });
+  return plant;
 }
-
-void GameManager::addZombie(zombie_ptr zombie) {
-  zombie_list[zombie->pos_i].push_back(zombie);
-  // QList<Zombie *> &list = zombie_list[i];
-  // std::sort(list.begin(), list.end(), [](Zombie *a, Zombie *b) {
-  //   return a->pos_i < b->pos_i;
-  // });
-  // connect(zombie.data(), &Zombie::deathed, [this, zombie]() {
-  //   zombie_list[zombie->pos_i].removeOne(zombie);
-  //   zombie->disconnect();
-  //   zombie->scene()->removeItem(z ombie.data());
-  //   zombie->deleteLater();
-  // });
+zombie_ptr GameManager::createZombie(ZombieType type, int pos_i) {
+  zombie_ptr zombie = nullptr;
+  ZombieData zombieData = config->zombiesData().value(config->zombiesTypeMap().key(type));
+  switch (type) {
+  case ZombieType::NAORMAL: zombie = QSharedPointer<Zombie>(new NormalZombie(this, pos_i, zombieData)); break;
+  case ZombieType::CONE: zombie = QSharedPointer<Zombie>(new ConeZombie(this, pos_i, zombieData)); break;
+  case ZombieType::BUCKET: zombie = QSharedPointer<Zombie>(new BucketZombie(this, pos_i, zombieData)); break;
+  default:
+    return nullptr;
+  }
+  zombie_list[pos_i].push_back(zombie);
+  QWeakPointer<Zombie> weakZombie = zombie;
+  connect(zombie.data(), &Zombie::deathed, [this, weakZombie]() {
+    if (auto zombie = weakZombie.lock()) {
+      zombie_list[zombie->pos_i].removeOne(zombie);
+      // zombie->destoryGif(weakZombie);
+      zombie->scene()->removeItem(zombie.data());
+    }
+  });
+  return zombie;
 }

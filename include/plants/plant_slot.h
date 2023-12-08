@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-05 21:27:59
- * @LastEditTime: 2023-12-06 21:53:03
+ * @LastEditTime: 2023-12-08 19:17:02
  * @Description: 植物的坑位
  */
 #ifndef PLANT_SLOT_H
@@ -16,35 +16,46 @@
 
 class GameManager;
 class PlantSlot : public QGraphicsObject {
+  Q_OBJECT
 public:
   PlantSlot(QGraphicsScene *scene, GameManager *manager);
-  virtual ~PlantSlot() = default;
+  virtual ~PlantSlot() {
+    emit destory();
+  }
 
   QRectF boundingRect() const override;
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
   /* 坐标标识 */
   QPoint ij;
-  
+
   /* 内联 */
   inline QGraphicsScene *mutableScene() {
     return scene;
   }
 
-  inline QPixmap* mutablePixmap() {
+  inline QPixmap *mutablePixmap() {
     return &pixmap;
   }
 
-  inline GameManager* gameManager() {
+  inline GameManager *gameManager() {
     return manager;
   }
 
+signals:
+  void destory();
+
 protected:
-  void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override {}
-  void mousePressEvent(QGraphicsSceneMouseEvent *event) override {}
-  void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override {}
-  void dragEnterEvent(QGraphicsSceneDragDropEvent *event) override {}
-  void dragLeaveEvent(QGraphicsSceneDragDropEvent *event) override {}
+  void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override {
+  }
+  void mousePressEvent(QGraphicsSceneMouseEvent *event) override {
+  }
+  void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override {
+  }
+  void dragEnterEvent(QGraphicsSceneDragDropEvent *event) override {
+  }
+  void dragLeaveEvent(QGraphicsSceneDragDropEvent *event) override {
+  }
   void dropEvent(QGraphicsSceneDragDropEvent *event) override;
 
 private:

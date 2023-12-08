@@ -1,14 +1,13 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-03 22:56:48
- * @LastEditTime: 2023-12-07 22:44:50
+ * @LastEditTime: 2023-12-08 21:46:45
  * @Description: 游戏界面
  */
 #include "include/gamewindow.h"
 #include "include/manager/card_manager.h"
 #include "include/manager/game_manager.h"
-#include "include/manager/plant_config.h"
-#include "include/manager/zombie_config.h"
+#include "include/manager/global_config.h"
 #include "include/plants/plant_card.h"
 #include "include/plants/plant_slot.h"
 #include "include/share/menu_label.h"
@@ -36,8 +35,9 @@ GameWindow::GameWindow(QWidget *parent) :
   QWidget(parent),
   scene(new QGraphicsScene(this)),
   view(new QGraphicsView(scene)),
-  card_manager(new CardManager(this, scene)),
-  game_manager(new GameManager(this, scene)) {
+  config(new GlobalConfig(this)),
+  card_manager(new CardManager(this, scene, config)),
+  game_manager(new GameManager(this, scene, config)) {
   setFixedSize(900, 600);
   setObjectName("gamewindow");
   setStyleSheet(" \
@@ -83,7 +83,7 @@ void GameWindow::init() {
     timer->setSingleShot(true);
     timer->start(200);
     emit gameStart();
-    qsizetype size = PlantConfig::allPlants().size();
+    qsizetype size = config->plantsData().size();
     for (int i = 0; i < 6; i++) {
       if (!card_manager->plantVec()[i + size]->name().isEmpty()) {
         plants << card_manager->plantVec()[i + size]->name();
@@ -100,7 +100,7 @@ void GameWindow::init() {
       delete choose_card;
       delete start;
       for (int i = 0; i < plants.size(); i++) {
-        PlantConfig::PlantData plant = PlantConfig::allPlants().value(plants[i]);
+        PlantData plant = config->plantsData().value(plants[i]);
         PlantCard *card = new PlantCard(plant.img, plant.img_drop);
         card->setPos(78 + i * (130 - 78), 8);
         card->setPlantName(plant.name);
@@ -126,9 +126,9 @@ void GameWindow::start() {
   }
   i = 0;
   for (QPoint point : game_manager->zombiePos()) {
-    QSharedPointer<Zombie> zombie = ZombieConfig::createZombie(ZombieConfig::NAORMAL, game_manager, i++);
+    zombie_ptr zombie = game_manager->createZombie(CONE, i++);
     zombie->setPos(point);
-    game_manager->addZombie(zombie);
+    // game_manager->addZombie(zombie);
     scene->addItem(zombie.data());
   }
 }

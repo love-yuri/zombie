@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-05 17:37:15
- * @LastEditTime: 2023-12-06 21:44:49
+ * @LastEditTime: 2023-12-08 14:17:54
  * @Description: 植物卡片
  */
 
@@ -16,7 +16,7 @@
 #include <qmovie.h>
 #include <qpixmap.h>
 #include "hpp/tools.hpp"
-#include "include/manager/plant_config.h"
+#include "include/manager/global_config.h"
 #include <QPainter>
 #include <qcolor.h>
 #include <qevent.h>
@@ -51,11 +51,8 @@ void PlantSlot::dropEvent(QGraphicsSceneDragDropEvent *event) {
   } else {
     state++;
   }
-  PlantConfig::PlantData plant = PlantConfig::allPlants().value(event->mimeData()->text());
-  auto type_map = PlantConfig::typeMap();
-  PlantConfig::PlantType type = type_map.value(plant.name);
-  QSharedPointer<Plant> p = PlantConfig::createPlant(type, this, plant);
-  manager->addPlant(p);
+  plant_ptr p = manager->createPlant(event->mimeData()->text(), this);
+  // manager->addPlant(p);
   connect(p.data(), &Plant::deathed, [this]() {
     pixmap = QPixmap(81, 81);
     pixmap.fill(QColor(0, 0, 0, 0));

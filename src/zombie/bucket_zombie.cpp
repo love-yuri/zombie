@@ -1,22 +1,22 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-07 14:04:22
- * @LastEditTime: 2023-12-08 22:26:25
+ * @LastEditTime: 2023-12-08 22:29:44
  * @Description: 普通僵尸
  */
 #include "hpp/tools.hpp"
 #include "include/plants/plant.h"
-#include "include/zombie/nomal_zombie.h"
+#include "include/zombie/bucket_zombie.h"
 #include "include/zombie/zombie.h"
 #include <QTimer>
 #include <qtimer.h>
 
-NormalZombie::NormalZombie(GameManager *manager, int pos_i, const ZombieData &zombieData) :
+BucketZombie::BucketZombie(GameManager *manager, int pos_i, const ZombieData &zombieData) :
   Zombie(manager, pos_i, zombieData) {
 }
 
 /* 僵尸攻击效果 */
-void NormalZombie::attack(QWeakPointer<Plant> weakPlant) {
+void BucketZombie::attack(QWeakPointer<Plant> weakPlant) {
   if (auto plant = weakPlant.lock()) {
     move_timer->stop();
     plant->attackZombie = this;
@@ -36,7 +36,7 @@ void NormalZombie::attack(QWeakPointer<Plant> weakPlant) {
 }
 
 /* 受伤效果 */
-void NormalZombie::injuried(int blod) {
+void BucketZombie::injuried(int blod) {
   this->blod -= blod;
   if (this->blod <= 0) {
     zom_state = 0;

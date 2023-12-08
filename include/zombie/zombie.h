@@ -1,14 +1,15 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 18:49:14
- * @LastEditTime: 2023-12-07 18:58:01
+ * @LastEditTime: 2023-12-08 22:16:00
  * @Description: 僵尸基类
  */
 #ifndef ZOMBIE_H
 #define ZOMBIE_H
 
-#include "include/manager/zombie_config.h"
+#include "include/manager/global_config.h"
 #include <QGraphicsObject>
+#include <qlist.h>
 #include <qmovie.h>
 #include <qtmetamacros.h>
 
@@ -16,12 +17,10 @@ class GameManager;
 class Plant;
 
 class Zombie : public QGraphicsObject {
-public:
-  using plant_ptr = QSharedPointer<Plant>;
-  using zombie_ptr = QSharedPointer<Zombie>;
+
   Q_OBJECT
 public:
-  Zombie(GameManager *manager, int pos_i, const ZombieConfig::ZombieData &zombieData);
+  Zombie(GameManager *manager, int pos_i, const ZombieData &zombieData);
   virtual ~Zombie();
 
   int pos_i;
@@ -29,9 +28,16 @@ public:
   QRectF boundingRect() const override;
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
-  virtual void attack(plant_ptr) = 0; /* 攻击 */
+  virtual void attack(QWeakPointer<Plant>) = 0; /* 攻击 */
   virtual void injuried(int blod) = 0; /* 僵尸受伤 */
   // virtual void injuried() = 0;
+
+  inline const int state() const {
+    return zom_state;
+  }
+
+  void restart();
+  void destoryGif(QWeakPointer<Zombie>);
 
 signals:
   void gameOver();/* 游戏结束 */
@@ -41,11 +47,14 @@ protected:
   QPixmap pixmap;
   QMovie *movie;
   GameManager *manager;
-  const ZombieConfig::ZombieData zombieData;
+  const ZombieData zombieData;
+
+  QList<QTimer *> timers;
 
 
   /* 僵尸属性 */
   int blod; // 血量
+  int zom_state; // 状态
 
   /* 定时器 */
   QTimer *attack_timer;

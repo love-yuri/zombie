@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-03 22:54:33
- * @LastEditTime: 2023-12-05 20:45:14
+ * @LastEditTime: 2023-12-08 14:23:20
  * @Description: 游戏主窗口
  */
 #ifndef GAME_WINDOW_H
@@ -10,6 +10,7 @@
 #include "include/game.h"
 #include "include/manager/card_manager.h"
 #include "include/manager/game_manager.h"
+#include "include/manager/global_config.h"
 #include <QWidget>
 #include <qgraphicsscene.h>
 #include <qgraphicsview.h>
@@ -43,6 +44,7 @@ private:
   Ui::GameWindow *ui;
 
   /* manager */
+  GlobalConfig *config;
   CardManager *card_manager;
   GameManager *game_manager;
 
