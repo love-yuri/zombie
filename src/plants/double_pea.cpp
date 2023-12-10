@@ -1,10 +1,10 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 17:55:15
- * @LastEditTime: 2023-12-10 15:15:02
+ * @LastEditTime: 2023-12-10 16:13:04
  * @Description: 豌豆射手
  */
-#include "include/plants/pea.h"
+#include "include/plants/double_pea.h"
 #include "hpp/tools.hpp"
 #include "include/plants/plant.h"
 #include "include/manager/game_manager.h"
@@ -19,20 +19,24 @@
 #include <qpixmap.h>
 #include <qtimer.h>
 
-Pea::Pea(PlantSlot *slot, const PlantData &data) :
+DoublePea::DoublePea(PlantSlot *slot, const PlantData &data) :
   Plant(slot, data) {
   // setParent(slot);
 }
 
 /* 攻击 */
-void Pea::attack() {
+void DoublePea::attack() {
   PeaAttack *attack = new PeaAttack(":/plants/bullet_normal.png");
-  attack->setPos(slot->pos() + QPointF(30, 10));
+  attack->setPos(slot->pos() + QPointF(50, 10));
   scene->addItem(attack);
   attack->start(30, this, manager, plantData.hurt);
+  PeaAttack *attack_2 = new PeaAttack(":/plants/bullet_normal.png");
+  attack_2->setPos(slot->pos() + QPointF(30, 10));
+  scene->addItem(attack_2);
+  attack_2->start(30, this, manager, plantData.hurt);
 }
 
-void Pea::destory() {
+void DoublePea::destory() {
   attack_timer->stop();
   for (QGraphicsItem *item : items) {
     item->scene()->removeItem(item);

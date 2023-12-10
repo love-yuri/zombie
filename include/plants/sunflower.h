@@ -1,11 +1,11 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 17:50:06
- * @LastEditTime: 2023-12-10 15:15:12
+ * @LastEditTime: 2023-12-09 14:04:26
  * @Description: 豌豆射手
  */
-#ifndef PEA_H
-#define PEA_H
+#ifndef SUNFLOWER_H
+#define SUNFLOWER_H
 
 #include "include/plants/plant_slot.h"
 #include "include/manager/global_config.h"
@@ -14,15 +14,15 @@
 #include <qmovie.h>
 #include <qpoint.h>
 
-class Pea : public Plant {
+class SunFlower : public Plant {
 public:
-  Pea(PlantSlot *slot, const PlantData &plantData);
-  virtual ~Pea() = default;
+  SunFlower(PlantSlot *slot, const PlantData &plantData);
+  virtual ~SunFlower() = default;
 
 protected:
   virtual void attack() override;
-
   virtual void destory() override;
+
 };
 
 #endif

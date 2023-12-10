@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-03 22:54:33
- * @LastEditTime: 2023-12-08 14:23:20
+ * @LastEditTime: 2023-12-10 22:58:33
  * @Description: 游戏主窗口
  */
 #ifndef GAME_WINDOW_H
@@ -28,8 +28,6 @@ class GameWindow : public QWidget {
 public:
   GameWindow(QWidget *parent = nullptr);
   virtual ~GameWindow();
-
-  void start();
 
 signals:
   void gameStart();  

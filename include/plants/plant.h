@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 11:04:50
- * @LastEditTime: 2023-12-08 20:49:04
+ * @LastEditTime: 2023-12-09 13:54:21
  * @Description: 植物基类
  */
 #ifndef PLANT_H
@@ -30,7 +30,19 @@ public:
 
   /* 植物方法 */
   virtual void attack() = 0; /* 攻击 */
-  virtual void injuried(int blod) = 0; /* 受伤 */
+  virtual void injuried(int blod) {
+    this->blod -= blod;
+    if (this->blod <= 0) {
+      isAlive = false;
+      destory();
+    }
+  }
+  virtual void destory() = 0; /* 死亡 */
+
+  inline const bool alive() const {
+    return isAlive;
+  }
+
 
   inline const PlantSlot *plantSlot() {
     return slot;
@@ -40,7 +52,8 @@ public:
 
 signals:
   void deathed(); /* 植物死亡 */
-  void near(); /* 僵尸靠近 */
+  void near();    /* 僵尸靠近 */
+  void movieStoped();
 
 protected:
   PlantSlot *slot;
@@ -53,7 +66,9 @@ protected:
   QList<QGraphicsItem *> items;
 
   /* 植物属性 */
-  int blod;     // 血量
+  int blod; // 血量
+  int deathedCount;
+  bool isAlive;
 
   /* 定时器 */
   QTimer *attack_timer;

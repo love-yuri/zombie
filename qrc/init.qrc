@@ -47,6 +47,7 @@
 
         <file>config/plant.json</file>
         <file>config/zombie.json</file>
+        <file>config/default.json</file>
 
         <file>plants/Potato/PotatoMine.gif</file>
         <file>plants/Potato/PotatoMine_mashed.gif</file>
@@ -90,6 +91,7 @@
         <file>zombie/normalZombie/ZombieDie.gif</file>
         <file>zombie/normalZombie/ZombieAttack.gif</file>
         <file>zombie/bucketZombie/BucketheadZombie.gif</file>
+        <file>Sun.gif</file>
         <file>zombie/bucketZombie/BucketheadZombieAttack.gif</file>
 
     </qresource>

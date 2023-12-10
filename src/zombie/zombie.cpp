@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 18:51:57
- * @LastEditTime: 2023-12-08 22:33:17
+ * @LastEditTime: 2023-12-10 14:56:16
  * @Description: 僵尸基类
  */
 #include "include/zombie/zombie.h"
@@ -18,7 +18,8 @@
 Zombie::Zombie(GameManager *manager, int pos_i, const ZombieData &zombieData) :
   manager(manager), pos_i(pos_i), zombieData(zombieData), blod(zombieData.blod) {
   // setZValue(60);
-  zom_state = 1;
+  deathedCount = 0;
+  isAlive = true;
 
   /* 播放默认状态 */
   movie = new QMovie(zombieData.default_state);
@@ -69,7 +70,10 @@ void Zombie::move() {
     if (auto plant = weakPlant.lock()) {
       /* 如果发生了碰撞 */
       if (collidesWithItem(plant->plantSlot())) {
-        attack(weakPlant);
+        emit plant->near();
+        if (isAlive) {
+          attack(weakPlant);
+        }
       }
     }
   });
@@ -77,26 +81,20 @@ void Zombie::move() {
 }
 
 void Zombie::restart() {
-  movie->stop();
-  movie->setFileName(zombieData.default_state);
-  move_timer->start(zombieData.speed);
-  movie->start();
+  if (isAlive) {
+    movie->stop();
+    movie->setFileName(zombieData.default_state);
+    move_timer->start(zombieData.speed);
+    movie->start();
+  }
 }
 
-void Zombie::destoryGif(QWeakPointer<Zombie> zombieWeak) {
-  // if (auto zombie = zombieWeak.lock()) {
-  //   zombie->movie->stop();
-  //   zombie->movie->setFileName(":/zombie/normalZombie/ZombieDie.gif");
-  //   zombie->movie->start();
-  //   QTimer *timer = new QTimer(this);
-  //   timer->setInterval(1000);
-  //   timer->setSingleShot(true);
-  //   connect(timer, &QTimer::timeout, [zombieWeak, zombie, timer]() {
-  //     timer->stop();
-  //     delete timer;
-  //     if (auto z = zombieWeak.lock()) {
-  //       z.clear();
-  //     }
-  //   });
-  // }
+void Zombie::destoryGif(QString fileName) {
+  // movie->disconnect(movie, &QMovie::frameChanged, nullptr, nullptr);
+  movie->stop();
+  movie->setFileName(fileName);
+  movie->start();
+  connect(movie, &QMovie::finished, [this] {
+    emit deathed();
+  });
 }

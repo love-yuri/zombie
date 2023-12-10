@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 18:49:14
- * @LastEditTime: 2023-12-08 22:16:00
+ * @LastEditTime: 2023-12-09 13:58:00
  * @Description: 僵尸基类
  */
 #ifndef ZOMBIE_H
@@ -29,15 +29,25 @@ public:
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
   virtual void attack(QWeakPointer<Plant>) = 0; /* 攻击 */
-  virtual void injuried(int blod) = 0; /* 僵尸受伤 */
-  // virtual void injuried() = 0;
 
-  inline const int state() const {
-    return zom_state;
+  /* 僵尸受伤 */
+  virtual void injuried(int blod) {
+    this->blod -= blod;
+    if (this->blod <= 0) {
+      isAlive = false;
+      destory();
+    }
+  }
+  
+  virtual void destory() = 0; /* 死亡 */
+
+  inline const bool alive() const {
+    return isAlive;
   }
 
   void restart();
-  void destoryGif(QWeakPointer<Zombie>);
+  void destoryGif(QString fileName);
+  
 
 signals:
   void gameOver();/* 游戏结束 */
@@ -54,7 +64,8 @@ protected:
 
   /* 僵尸属性 */
   int blod; // 血量
-  int zom_state; // 状态
+  int deathedCount; // 动画计数
+  bool isAlive; // 存活状态
 
   /* 定时器 */
   QTimer *attack_timer;

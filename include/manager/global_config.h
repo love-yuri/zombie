@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-08 13:22:09
- * @LastEditTime: 2023-12-08 14:13:09
+ * @LastEditTime: 2023-12-10 21:08:45
  * @Description:  全局配置类
  */
 
@@ -25,11 +25,13 @@ typedef struct {
   QString img_g;
   QString img_drop;
   QString default_state;
+  QString attack_state;
   int blod;     // 血量
   int hurt;     // 伤害
-  int sum;      // 需要阳光
+  int sun;      // 需要阳光
   int cd;       // 冷却
   int interval; // 攻击频率
+  bool isMelee; // 是否是近战
 } PlantData;
 
 enum PlantType {
@@ -62,6 +64,11 @@ enum ZombieType {
   CONE
 };
 
+/* 全局默认配置 */
+typedef struct {
+  int default_sun;
+} DefaultConfig;
+
 class GlobalConfig : public QObject {
   Q_OBJECT
 public:
@@ -81,16 +88,22 @@ public:
     return zombies_type_map;
   }
 
+  inline const DefaultConfig &defaultConfig() const {
+    return default_config;
+  }
+
 private:
   QMap<QString, PlantData> plants_data;
   QMap<QString, PlantType> plants_type_map;
   QMap<QString, ZombieData> zombies_data;
   QMap<QString, ZombieType> zombies_type_map;
+  DefaultConfig default_config;
 
   /* 加载配置文件 */
   void loadPlantConfig();
   void loadZombieConfig();
   void loadTypeConfig();
+  void loadDefaultConfig();
 };
 
 #endif

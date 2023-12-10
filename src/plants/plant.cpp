@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 21:32:53
- * @LastEditTime: 2023-12-08 21:43:50
+ * @LastEditTime: 2023-12-10 15:35:26
  * @Description: 植物基类
  */
 #include "include/plants/plant.h"
@@ -15,9 +15,10 @@ Plant::Plant(PlantSlot *slot, const PlantData &data) :
   slot(slot), plantData(data), manager(slot->gameManager()), ij(slot->ij), blod(data.blod) {
   this->scene = slot->mutableScene();
   this->pixmap = slot->mutablePixmap();
-
+  deathedCount = 0;
   /* 播放默认效果 */
   movie = new QMovie(data.default_state);
+  // movie
   connect(movie, &QMovie::frameChanged, [this] {
     QPixmap pix(movie->currentPixmap().scaled(pixmap->size()));
     pixmap->swap(pix);
@@ -26,10 +27,17 @@ Plant::Plant(PlantSlot *slot, const PlantData &data) :
   movie->start();
 
   /* 绑定攻击 */
+  attack_timer = new QTimer(this);
   if (data.interval > 0) {
-    attack_timer = new QTimer(this);
-    attack_timer->start(data.interval);
-    connect(attack_timer, &QTimer::timeout, this, &Plant::attack);
+    
+    if (data.isMelee) {
+      // connect(this, &Plant::near, [this] {
+      //   attack_timer->start(plantData.interval);
+      // });
+    } else {
+      connect(attack_timer, &QTimer::timeout, this, &Plant::attack);
+      attack_timer->start(data.interval);
+    }
   }
 
   /* 绑定销毁事件,防止出现slot先销毁后出问题的情况更 */
@@ -39,4 +47,5 @@ Plant::Plant(PlantSlot *slot, const PlantData &data) :
 Plant::~Plant() {
   movie->stop();
   attack_timer->stop();
+  disconnect();
 }

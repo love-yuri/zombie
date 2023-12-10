@@ -5,11 +5,13 @@
     "img_g": ":/cards/cherry_g.png",
     "img_drop": ":/rest/CherryBomb1.gif",
     "default_state": ":/plants/cherry.gif",
+    "attack_state" : ":/zombie/coneZombie/ConeheadZombieAttack.gif",
     "blod": 1000,
     "hurt": 122,
-    "sum": 122,
-    "cd": 122,
-    "interval": 1000
+    "sun": 150,
+    "cd": 4000,
+    "interval": 1000,
+    "isMelee": true
   },
   {
     "name": "dazui",
@@ -17,11 +19,13 @@
     "img_g": ":/cards/dazui_g.png",
     "img_drop": ":/rest/Chomper1.gif",
     "default_state": ":/plants/dazui/1.gif",
+    "attack_state" : ":/plants/dazui/ChomperAttack.gif",
     "blod": 1000,
     "hurt": 122,
-    "sum": 122,
+    "sun": 150,
     "cd": 122,
-    "interval": 1000
+    "interval": 1000,
+    "isMelee": true
   },
   {
     "name": "squash",
@@ -29,11 +33,13 @@
     "img_g": ":/cards/squash_g.png",
     "img_drop": ":/rest/Squash1.gif",
     "default_state": ":/plants/squash/squash.gif",
+    "attack_state" : ":/zombie/coneZombie/ConeheadZombieAttack.gif",
     "blod": 1000,
     "hurt": 122,
-    "sum": 122,
+    "sun": 50,
     "cd": 122,
-    "interval": 1000
+    "interval": 1000,
+    "isMelee": true
   },
   {
     "name": "spikeweed",
@@ -41,11 +47,13 @@
     "img_g": ":/cards/spikeweed_g.png",
     "img_drop": ":/rest/Spikeweed1.gif",
     "default_state": ":/plants/Spikeweed.gif",
+    "attack_state" : ":/zombie/coneZombie/ConeheadZombieAttack.gif",
     "blod": 1000,
     "hurt": 122,
-    "sum": 122,
+    "sun": 100,
     "cd": 122,
-    "interval": 1000
+    "interval": 1000,
+    "isMelee": true
   },
   {
     "name": "repeaterpea",
@@ -53,11 +61,13 @@
     "img_g": ":/cards/repeaterpea_g.png",
     "img_drop": ":/rest/Peashooter1.gif",
     "default_state": ":/plants/doublePea.gif",
+    "attack_state" : ":/zombie/coneZombie/ConeheadZombieAttack.gif",
     "blod": 1000,
     "hurt": 122,
-    "sum": 122,
+    "sun": 200,
     "cd": 122,
-    "interval": 1000
+    "interval": 1000,
+    "isMelee": false
   },
   {
     "name": "pea",
@@ -65,11 +75,13 @@
     "img_g": ":/cards/pea_g.png",
     "img_drop": ":/rest/Peashooter1.gif",
     "default_state": ":/plants/pea.gif",
+    "attack_state" : ":/zombie/coneZombie/ConeheadZombieAttack.gif",
     "blod": 1000,
     "hurt": 122,
-    "sum": 122,
+    "sun": 100,
     "cd": 122,
-    "interval": 1000
+    "interval": 1000,
+    "isMelee": false
   },
   {
     "name": "wallnut",
@@ -77,11 +89,13 @@
     "img_g": ":/cards/wallnut_g.png",
     "img_drop": ":/rest/WallNut1.gif",
     "default_state": ":/plants/nut/nut.gif",
+    "attack_state" : ":/zombie/coneZombie/ConeheadZombieAttack.gif",
     "blod": 1000,
     "hurt": 122,
-    "sum": 122,
+    "sun": 50,
     "cd": 122,
-    "interval": 1000
+    "interval": 1000,
+    "isMelee": false
   },
   {
     "name": "tallnut",
@@ -89,11 +103,12 @@
     "img_g": ":/cards/tallnut_g.png",
     "img_drop": ":/rest/TallNut1.gif",
     "default_state": ":/plants/tallnut/TallNut.gif",
-    "blod": 1000,
+    "attack_state" : ":/zombie/coneZombie/ConeheadZombieAttack.gif",
+    "blod": 1800,
     "hurt": 122,
-    "sum": 122,
+    "sun": 125,
     "cd": 122,
-    "interval": 1000
+    "interval": 0
   },
   {
     "name": "potatomine",
@@ -101,11 +116,13 @@
     "img_g": ":/cards/potatomine_g.png",
     "img_drop": ":/rest/PotatoMine1.gif",
     "default_state": ":/plants/Potato/PotatoMine.gif",
-    "blod": 1000,
+    "attack_state" : ":/zombie/coneZombie/ConeheadZombieAttack.gif",
+    "blod": 0,
     "hurt": 122,
-    "sum": 122,
+    "sun": 25,
     "cd": 122,
-    "interval": 1000
+    "interval": 0, 
+    "isMelee": true
   },
   {
     "name": "sunflower",
@@ -113,10 +130,12 @@
     "img_g": ":/cards/sunflower_g.png",
     "img_drop": ":/rest/SunFlower1.gif",
     "default_state": ":/plants/sunflower.gif",
+    "attack_state" : ":/zombie/coneZombie/ConeheadZombieAttack.gif",
     "blod": 1000,
     "hurt": 122,
-    "sum": 122,
-    "cd": 122,
-    "interval": 1000
+    "sun": 50,
+    "cd": 4000,
+    "interval": 4000,
+    "isMelee": false
   }
 ]

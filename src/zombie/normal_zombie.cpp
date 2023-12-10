@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-07 14:04:22
- * @LastEditTime: 2023-12-08 22:26:25
+ * @LastEditTime: 2023-12-09 13:23:15
  * @Description: 普通僵尸
  */
 #include "hpp/tools.hpp"
@@ -36,19 +36,8 @@ void NormalZombie::attack(QWeakPointer<Plant> weakPlant) {
 }
 
 /* 受伤效果 */
-void NormalZombie::injuried(int blod) {
-  this->blod -= blod;
-  if (this->blod <= 0) {
-    zom_state = 0;
-    move_timer->stop();
-    movie->stop();
-    movie->setFileName(":/zombie/normalZombie/ZombieDie.gif");
-    movie->start();
-    QTimer *timer = new QTimer(this);
-    timer->setSingleShot(true);
-    connect(timer, &QTimer::timeout, [this]() {
-      emit deathed();
-    });
-    timer->start(1000);
-  }
+void NormalZombie::destory() {
+  isAlive = false;
+  move_timer->stop();
+  destoryGif(":/zombie/normalZombie/ZombieDie.gif");
 }

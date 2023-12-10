@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-03 22:56:48
- * @LastEditTime: 2023-12-08 21:46:45
+ * @LastEditTime: 2023-12-10 22:57:40
  * @Description: 游戏界面
  */
 #include "include/gamewindow.h"
@@ -97,38 +97,9 @@ void GameWindow::init() {
       scene->removeItem(start);
       scene->removeItem(choose_card);
       card_solt->setPos(0, 0);
+      game_manager->start(plants);
       delete choose_card;
       delete start;
-      for (int i = 0; i < plants.size(); i++) {
-        PlantData plant = config->plantsData().value(plants[i]);
-        PlantCard *card = new PlantCard(plant.img, plant.img_drop);
-        card->setPos(78 + i * (130 - 78), 8);
-        card->setPlantName(plant.name);
-        scene->addItem(card);
-      }
     });
   });
-}
-
-/* 游戏开始 */
-void GameWindow::start() {
-  int i = -1;
-  for (QVector<QPoint> points : game_manager->posMap()) {
-    int j = -1;
-    i++;
-    for (QPoint point : points) {
-      j++;
-      PlantSlot *slot = new PlantSlot(scene, game_manager);
-      slot->setPos(point);
-      slot->ij = QPoint(i, j);
-      scene->addItem(slot);
-    }
-  }
-  i = 0;
-  for (QPoint point : game_manager->zombiePos()) {
-    zombie_ptr zombie = game_manager->createZombie(CONE, i++);
-    zombie->setPos(point);
-    // game_manager->addZombie(zombie);
-    scene->addItem(zombie.data());
-  }
 }

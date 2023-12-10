@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-03 16:31:01
- * @LastEditTime: 2023-12-06 20:11:57
+ * @LastEditTime: 2023-12-10 22:58:39
  * @Description: 游戏开始
  */
 #include "include/game.h"
@@ -33,7 +33,6 @@ Game::Game(QMainWindow *parent) :
 }
 
 Game::~Game() {
-  
 }
 
 void Game::init() {
@@ -77,7 +76,6 @@ void Game::windowInit() {
       scroll->setValue(scroll->value() - 1);
       proxyWidget->setPos(proxyWidget->pos().x() - 1, proxyWidget->pos().y());
       if (scroll->value() == 150) {
-        game->start();
         timer->stop();
       }
     });

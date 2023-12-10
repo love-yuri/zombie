@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-05 17:37:15
- * @LastEditTime: 2023-12-08 14:17:54
+ * @LastEditTime: 2023-12-10 21:54:34
  * @Description: 植物卡片
  */
 
@@ -52,22 +52,11 @@ void PlantSlot::dropEvent(QGraphicsSceneDragDropEvent *event) {
     state++;
   }
   plant_ptr p = manager->createPlant(event->mimeData()->text(), this);
-  // manager->addPlant(p);
   connect(p.data(), &Plant::deathed, [this]() {
     pixmap = QPixmap(81, 81);
     pixmap.fill(QColor(0, 0, 0, 0));
     movie = nullptr;
     update();
+    state = 0;
   });
-  //   QMovie * backgroundGifMovie = new QMovie(this);
-
-  // movie = new QMovie(plant.default_state);
-  // connect(movie, &QMovie::frameChanged, [this] {
-  //   pixmap = movie->currentPixmap().scaled(pixmap.size());
-  //   update();
-  // });
-  // movie->start();
-  // QPixmap img(QPixmap(plant.img).scaled(pixmap.size()));
-  // pixmap.swap(img);
-  // update();
 }

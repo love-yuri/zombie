@@ -1,15 +1,18 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 19:49:24
- * @LastEditTime: 2023-12-08 20:35:24
+ * @LastEditTime: 2023-12-10 22:51:25
  * @Description: 游戏管理器
  */
 #ifndef GAME_MANAGER_H
 #define GAME_MANAGER_H
 
+class SunNumber;
+
 #include "include/manager/global_config.h"
 #include "include/plants/plant.h"
 #include "include/zombie/zombie.h"
+#include "include/plants/plant_card.h"
 #include <qcontainerfwd.h>
 #include <QVector>
 #include <QSharedPointer>
@@ -40,6 +43,10 @@ public:
     return zombie_list;
   }
 
+  inline const QVector<QVector<PlantSlot *>> &slotList() const {
+    return slot_list;
+  }
+
   inline const QList<QPoint> &zombiePos() const {
     return zombie_pos;
   }
@@ -48,34 +55,37 @@ public:
     return timers;
   }
 
+  inline const int sun() const {
+    return sun_;
+  }
+
+  inline QList<PlantCard *> & plantCards() {
+    return plant_cards;
+  }
+
+  QWeakPointer<Plant> firstPlant(int i) ;
+  QWeakPointer<Zombie> firstZombie(int i);
   plant_ptr createPlant(QString, PlantSlot *);
   zombie_ptr createZombie(ZombieType, int);
-
-  QWeakPointer<Plant> firstPlant(int i) {
-    if (i >= plant_list.size() || plant_list[i].isEmpty()) {
-      return QWeakPointer<Plant>();
-    }
-    return plant_list[i].first();
-  }
-
-  QWeakPointer<Zombie> firstZombie(int i) {
-    if (i >= zombie_list.size() || zombie_list[i].isEmpty()) {
-      return QWeakPointer<Zombie>();
-    }
-    return zombie_list[i].first();
-  }
+  void start(const QList<QString> &plants); /* 游戏开始全局处理 */
+  void addSun();
+  void delSun(int val);
 
 private:
   QVector<QVector<QPoint>> pos_map;
   QVector<QList<plant_ptr>> plant_list;
   QVector<QList<zombie_ptr>> zombie_list;
+  QVector<QVector<PlantSlot*>> slot_list;
   QList<QPoint> zombie_pos;
+  QList<plant_ptr> plant_list_temp;
 
   QList<QTimer *> timers;
+  QList<PlantCard *> plant_cards;
 
   QGraphicsScene *scene;
   GlobalConfig *config;
-  // QVector<QSet<Zombie>> zombie_list;
+  SunNumber *sun_number;
+  int sun_;
 };
 
 #endif

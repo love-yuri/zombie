@@ -1,11 +1,11 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 17:50:06
- * @LastEditTime: 2023-12-10 15:15:12
+ * @LastEditTime: 2023-12-10 14:58:22
  * @Description: 豌豆射手
  */
-#ifndef PEA_H
-#define PEA_H
+#ifndef POTATO_H
+#define POTATO_H
 
 #include "include/plants/plant_slot.h"
 #include "include/manager/global_config.h"
@@ -14,13 +14,14 @@
 #include <qmovie.h>
 #include <qpoint.h>
 
-class Pea : public Plant {
+class Potato : public Plant {
 public:
-  Pea(PlantSlot *slot, const PlantData &plantData);
-  virtual ~Pea() = default;
+  Potato(PlantSlot *slot, const PlantData &plantData);
+  virtual ~Potato() = default;
 
 protected:
   virtual void attack() override;
+  void destoryGif(QString fileName);
 
   virtual void destory() override;
 };
