@@ -92,7 +92,23 @@
         <file>zombie/normalZombie/ZombieAttack.gif</file>
         <file>zombie/bucketZombie/BucketheadZombie.gif</file>
         <file>Sun.gif</file>
+        <file>zombie/boomdead.gif</file>
         <file>zombie/bucketZombie/BucketheadZombieAttack.gif</file>
+
+        <file>audio/buttonclick.wav</file>
+        <file>audio/plant1.wav</file>
+        <file>audio/potato_mine.wav</file>
+        <file>audio/sunshine.wav</file>
+        <file>audio/winmusic.wav</file>
+        <file>audio/bgm/MainMenuBgm.wav</file>
+        <file>audio/bgm/choiceBgm.wav</file>
+        <file>audio/bgm/bgm2.wav</file>
+        <file>audio/bgm/losemusic.wav</file>
+        <file>audio/bgm/bgm1.wav</file>
+        <file>audio/zombieeat.wav</file>
+        <file>audio/scream.wav</file>
+        <file>audio/cherrybomb.wav</file>
+        <file>audio/peashooter.wav</file>
 
     </qresource>
 </RCC>

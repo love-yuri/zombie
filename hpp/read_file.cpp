@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-02 16:06:34
- * @LastEditTime: 2023-12-07 13:41:10
+ * @LastEditTime: 2023-12-11 19:08:38
  * @Description: 扫描当前目录下所有文件
  */
 #include <iostream>
@@ -26,9 +26,9 @@ void listFilesAndDirectories(const fs::path &directory, const std::string &prefi
 }
 
 int main() {
-  const std::string path = "/home/yuri/love/zombie/qrc/zombie"; // 替换为你的目录路径
+  const std::string path = "/home/yuri/love/zombie/qrc/audio"; // 替换为你的目录路径
 
-  listFilesAndDirectories(path, "zombie/");
+  listFilesAndDirectories(path, "audio/");
 
   return 0;
 }

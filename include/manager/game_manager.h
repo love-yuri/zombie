@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 19:49:24
- * @LastEditTime: 2023-12-10 22:51:25
+ * @LastEditTime: 2023-12-11 14:24:28
  * @Description: 游戏管理器
  */
 #ifndef GAME_MANAGER_H
@@ -14,6 +14,7 @@ class SunNumber;
 #include "include/zombie/zombie.h"
 #include "include/plants/plant_card.h"
 #include <qcontainerfwd.h>
+#include <QReadWriteLock>
 #include <QVector>
 #include <QSharedPointer>
 #include <qgraphicsscene.h>
@@ -85,6 +86,8 @@ private:
   QGraphicsScene *scene;
   GlobalConfig *config;
   SunNumber *sun_number;
+  QReadWriteLock plant_lock;
+  QReadWriteLock zombie_lock;
   int sun_;
 };
 

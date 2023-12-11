@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-05 10:47:32
- * @LastEditTime: 2023-12-08 14:20:04
+ * @LastEditTime: 2023-12-11 17:27:54
  * @Description:
  */
 #include "include/manager/card_manager.h"
@@ -39,4 +39,22 @@ void CardManager::build() {
 
 const QVector<CardItem *> &CardManager::plantVec() const {
   return plant_vec;
+}
+
+CardItem *CardManager::filstCard(int id) {
+  if (id < config->plantsData().size()) {
+    for (int i = config->plantsData().size(); i < plant_vec.size(); i++) {
+      if (plant_vec[i]->fileName().isEmpty()) {
+        return plant_vec[i];
+      }
+    }
+  } else {
+    for (int i = 0; i < config->plantsData().size(); i++) {
+      if (plant_vec[i]->fileName().isEmpty()) {
+        return plant_vec[i];
+      }
+    }
+  }
+
+  return nullptr;
 }

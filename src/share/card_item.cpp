@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-04 17:41:17
- * @LastEditTime: 2023-12-06 20:11:31
+ * @LastEditTime: 2023-12-11 16:18:20
  * @Description:
  */
 #include "include/share/card_item.h"
@@ -87,7 +87,13 @@ void CardItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 }
 
 void CardItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *) {
-  // qinfo << "放开n";
+  if (file_name.isEmpty()) {
+    return;
+  }
+  CardItem *item = manager->filstCard(id);
+  if (item != nullptr) {
+    item->setCard(this);
+  }
 }
 
 void CardItem::dragEnterEvent(QGraphicsSceneDragDropEvent *event) {
@@ -113,4 +119,13 @@ void CardItem::dropEvent(QGraphicsSceneDragDropEvent *event) {
 
 const QString &CardItem::fileName() const {
   return file_name;
+}
+
+void CardItem::setCard(CardItem *item) {
+  file_name = item->fileName();
+  name_y = item->name();
+  QPixmap img(QPixmap(file_name).scaled(QSize(45, 65)));
+  pixmap->swap(img);
+  item->clear();
+  update();
 }

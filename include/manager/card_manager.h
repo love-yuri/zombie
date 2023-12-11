@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-04 22:30:09
- * @LastEditTime: 2023-12-08 14:19:44
+ * @LastEditTime: 2023-12-11 16:18:12
  * @Description: 卡片管理
  */
 #ifndef CARD_MANAGER_H
@@ -21,6 +21,7 @@ public:
   /* func */
   void build();
   const QVector<CardItem *> &plantVec() const;
+  CardItem * filstCard(int id);
 
 private:
   QGraphicsScene *scene;

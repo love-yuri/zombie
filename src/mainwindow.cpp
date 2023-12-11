@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-09-27 13:27:55
- * @LastEditTime: 2023-12-06 20:11:44
+ * @LastEditTime: 2023-12-11 21:14:45
  * @Description:
  */
 
@@ -11,12 +11,14 @@
 #include <qlabel.h>
 #include <qmainwindow.h>
 #include <qsize.h>
+#include <qsoundeffect.h>
 #include <qwindowdefs.h>
 #include <qpainter.h>
 #include "hpp/tools.hpp"
 #include <QDialog>
 #include "include/game.h"
 #include "include/menu/info_dialog.h"
+#include <QSoundEffect>
 #include "include/menu/setting_dialog.h"
 
 MainWindow::MainWindow(QMainWindow *parent) :

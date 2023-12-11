@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-05 17:37:15
- * @LastEditTime: 2023-12-10 22:18:37
+ * @LastEditTime: 2023-12-11 17:43:18
  * @Description: 植物卡片
  */
 
@@ -56,6 +56,7 @@ void PlantCard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     pixmap = QPixmap(plant_data.img).scaled(45, 65);
   }
   painter->setRenderHint(QPainter::Antialiasing);
+  
   painter->drawPixmap(pixmap.rect(), pixmap);
   if (timeout != 0) {
     double bl = double(timeout) / (plant_data.cd / 200.0);
@@ -82,5 +83,5 @@ void PlantCard::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
   darg->exec();
   timeout = plant_data.cd / 200;
   cd_timer->start(200);
-  // qinfo << "结束" << event->isAccepted();
+  qinfo << "结束" << pixmap.size();
 }

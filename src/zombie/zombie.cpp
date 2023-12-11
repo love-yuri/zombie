@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 18:51:57
- * @LastEditTime: 2023-12-10 14:56:16
+ * @LastEditTime: 2023-12-11 15:57:20
  * @Description: 僵尸基类
  */
 #include "include/zombie/zombie.h"
@@ -91,6 +91,8 @@ void Zombie::restart() {
 
 void Zombie::destoryGif(QString fileName) {
   // movie->disconnect(movie, &QMovie::frameChanged, nullptr, nullptr);
+  isAlive = false;
+  move_timer->stop();
   movie->stop();
   movie->setFileName(fileName);
   movie->start();

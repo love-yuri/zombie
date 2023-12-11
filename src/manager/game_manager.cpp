@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 20:46:20
- * @LastEditTime: 2023-12-10 23:05:01
+ * @LastEditTime: 2023-12-11 17:21:05
  * @Description:
  */
 #include "include/manager/game_manager.h"
@@ -31,6 +31,7 @@
 #include <qgraphicsscene.h>
 #include <qlist.h>
 #include <qpoint.h>
+#include <qreadwritelock.h>
 #include <qtimer.h>
 
 GameManager::GameManager(QObject *parent, QGraphicsScene *scene, GlobalConfig *config) :
@@ -50,13 +51,14 @@ GameManager::GameManager(QObject *parent, QGraphicsScene *scene, GlobalConfig *c
   }
   plant_list = QVector<QList<plant_ptr>>(pos_map.size());
   zombie_list = QVector<QList<zombie_ptr>>(pos_map.size());
-  slot_list = QVector<QVector<PlantSlot*>>(pos_map.size(), QVector<PlantSlot*>(pos_map.first().size()));
+  slot_list = QVector<QVector<PlantSlot *>>(pos_map.size(), QVector<PlantSlot *>(pos_map.first().size()));
 }
 
 GameManager::~GameManager() {
 }
 
 QWeakPointer<Plant> GameManager::firstPlant(int i) {
+  QReadLocker locker(&plant_lock);
   if (i >= plant_list.size() || plant_list[i].isEmpty()) {
     return QWeakPointer<Plant>();
   }
@@ -64,6 +66,7 @@ QWeakPointer<Plant> GameManager::firstPlant(int i) {
 }
 
 QWeakPointer<Zombie> GameManager::firstZombie(int i) {
+  QReadLocker locker(&zombie_lock);
   if (i >= zombie_list.size() || zombie_list[i].isEmpty()) {
     return QWeakPointer<Zombie>();
   }
@@ -88,6 +91,7 @@ plant_ptr GameManager::createPlant(QString name, PlantSlot *slot) {
     return nullptr;
   }
   delSun(data.sun);
+  QWriteLocker locker(&plant_lock);
   if (config->plantsTypeMap().value(name) == SKIKEWEED) {
     plant_list_temp.push_back(plant);
     return plant;
@@ -104,7 +108,6 @@ plant_ptr GameManager::createPlant(QString name, PlantSlot *slot) {
       if (plant->attackZombie) {
         plant->attackZombie->restart();
       }
-      qinfo << "植物死亡";
       plant->disconnect(plant.data(), &Plant::near, nullptr, nullptr);
       plant.clear();
     }
@@ -121,12 +124,12 @@ zombie_ptr GameManager::createZombie(ZombieType type, int pos_i) {
   default:
     return nullptr;
   }
+  QWriteLocker locker(&zombie_lock);
   zombie_list[pos_i].push_back(zombie);
   QWeakPointer<Zombie> weakZombie = zombie;
   connect(zombie.data(), &Zombie::deathed, [this, weakZombie]() {
     if (auto zombie = weakZombie.lock()) {
       zombie_list[zombie->pos_i].removeOne(zombie);
-      // zombie->destoryGif(weakZombie);
       zombie->scene()->removeItem(zombie.data());
     }
   });
@@ -134,7 +137,7 @@ zombie_ptr GameManager::createZombie(ZombieType type, int pos_i) {
 }
 
 void GameManager::addSun() {
-  sun_ += 20;
+  sun_ += 25;
   sun_number->update();
   // scene->update();
   for (PlantCard *card : plant_cards) {

@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-04 17:40:16
- * @LastEditTime: 2023-12-05 20:29:14
+ * @LastEditTime: 2023-12-11 16:13:41
  * @Description: pixmap
  */
 #ifndef CARD_ITEM_H
@@ -23,6 +23,7 @@ public:
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
   void clear();
   const QString &fileName() const;
+  void setCard(CardItem *item);
   const QString &name() const {
     return name_y;
   }

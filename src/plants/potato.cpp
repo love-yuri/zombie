@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 17:55:15
- * @LastEditTime: 2023-12-10 15:45:38
+ * @LastEditTime: 2023-12-11 16:34:03
  * @Description: 豌豆射手
  */
 #include "include/plants/potato.h"
@@ -29,7 +29,7 @@ Potato::Potato(PlantSlot *slot, const PlantData &data) :
     attackZombie = nullptr;
     if (auto zombie = weakZombie.lock()) {
       if (zombie->alive()) {
-        zombie->destory();
+        zombie->destoryGif(":/zombie/boomdead.gif");
       }
     }
   });
@@ -51,23 +51,10 @@ void Potato::destory() {
 }
 
 void Potato::destoryGif(QString fileName) {
-  movie->disconnect(movie, &QMovie::frameChanged, nullptr, nullptr);
   movie->stop();
   movie->setFileName(fileName);
-  connect(movie, &QMovie::frameChanged, [this] {
-    if (movie->currentFrameNumber() == 0) {
-      if (deathedCount == 1) {
-        emit deathed();
-        return;
-      }
-      deathedCount++;
-    }
-    QPixmap pix(movie->currentPixmap().scaled(pixmap->size()));
-    pixmap->swap(pix);
-    this->slot->update();
-  });
+  movie->start();
   connect(movie, &QMovie::finished, [this] {
     emit deathed();
   });
-  movie->start();
 }

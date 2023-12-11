@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 21:32:53
- * @LastEditTime: 2023-12-10 15:35:26
+ * @LastEditTime: 2023-12-11 13:39:20
  * @Description: 植物基类
  */
 #include "include/plants/plant.h"

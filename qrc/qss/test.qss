@@ -1,6 +1,0 @@
-#centralwidget {
-  border-image: url(:/startMenu/MainMenu.png);
-}
-#gamewindow {
-  background-color: transparent;
-}

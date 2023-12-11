@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 17:55:15
- * @LastEditTime: 2023-12-10 23:18:30
+ * @LastEditTime: 2023-12-11 15:55:49
  * @Description: 豌豆射手
  */
 #include "include/plants/cherry.h"
@@ -24,7 +24,6 @@
 Cherry::Cherry(PlantSlot *slot, const PlantData &data) :
   Plant(slot, data) {
   // setParent(slot);
-  destory();
   int x = ij.x();
   int y = ij.y();
   boom(x - 1, y);
@@ -36,6 +35,7 @@ Cherry::Cherry(PlantSlot *slot, const PlantData &data) :
   boom(x, y);
   boom(x, y - 1);
   boom(x, y + 1);
+  destory();
 }
 
 /* 攻击 */
@@ -54,40 +54,27 @@ void Cherry::destory() {
 }
 
 void Cherry::destoryGif(QString fileName) {
-  movie->disconnect(movie, &QMovie::frameChanged, nullptr, nullptr);
+  // movie->disconnect(movie, &QMovie::frameChanged, nullptr, nullptr);
   movie->stop();
   movie->setFileName(fileName);
-  connect(movie, &QMovie::frameChanged, [this] {
-    qinfo << movie->currentFrameNumber();
-    if (movie->currentFrameNumber() == 0) {
-      if (deathedCount == 1) {
-        qinfo << "结束";
-        emit deathed();
-        return;
-      }
-      deathedCount++;
-    }
-    QPixmap pix(movie->currentPixmap().scaled(pixmap->size()));
-    pixmap->swap(pix);
-    this->slot->update();
-  });
   movie->start();
+  connect(movie, &QMovie::finished, [this] {
+    emit deathed();
+  });
 }
 
 void Cherry::boom(int x, int y) {
   if (x < 0 || y < 0) {
     return;
   }
-  if (x >= manager->zombieList().size() || y >= manager->plantList().at(x).size()) {
+  if (x >= manager->slotList().size() || y >= manager->slotList().at(x).size()) {
     return;
   }
-  qinfo << "X -> " << x << " y-> " << y;
   auto slot = manager->slotList().at(x).at(y);
   for (QWeakPointer<Zombie> zombieWeak : manager->zombieList().at(x)) {
     if (auto zombie = zombieWeak.lock()) {
       if (zombie->collidesWithItem(slot)) {
-        qinfo << "炸到一个僵尸!";
-        zombie->destory();
+        zombie->destoryGif(":/zombie/boomdead.gif");
       }
     }
   }

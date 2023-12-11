@@ -17,10 +17,12 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # 开启生成 compile_commands.json
 
 # 寻找qt依赖库
 find_package(QT NAMES Qt6 REQUIRED COMPONENTS  Widgets LinguistTools )
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS  Widgets LinguistTools)
+find_package(Qt6 REQUIRED COMPONENTS  Widgets LinguistTools)
 find_package(Qt6 COMPONENTS Network REQUIRED)
 find_package(Qt6 COMPONENTS StateMachine REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS Sql)
+find_package(Qt6 REQUIRED COMPONENTS Multimedia)
+
 
 # 全局包含头文件
 INCLUDE_DIRECTORIES(
@@ -73,6 +75,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Sql)
     target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Network)
     target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::StateMachine)
+    target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Multimedia)
     
 
     # 设置项目属性
