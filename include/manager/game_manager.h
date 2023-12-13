@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 19:49:24
- * @LastEditTime: 2023-12-11 14:24:28
+ * @LastEditTime: 2023-12-12 14:30:58
  * @Description: 游戏管理器
  */
 #ifndef GAME_MANAGER_H
@@ -64,6 +64,10 @@ public:
     return plant_cards;
   }
 
+  inline const GlobalConfig *globalConfig() const {
+    return config;
+  }
+
   QWeakPointer<Plant> firstPlant(int i) ;
   QWeakPointer<Zombie> firstZombie(int i);
   plant_ptr createPlant(QString, PlantSlot *);
@@ -71,6 +75,9 @@ public:
   void start(const QList<QString> &plants); /* 游戏开始全局处理 */
   void addSun();
   void delSun(int val);
+
+signals:
+  void lastZoms();
 
 private:
   QVector<QVector<QPoint>> pos_map;
@@ -89,6 +96,7 @@ private:
   QReadWriteLock plant_lock;
   QReadWriteLock zombie_lock;
   int sun_;
+  int zom_num;
 };
 
 #endif

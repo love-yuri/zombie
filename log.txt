@@ -13,3 +13,7 @@ Info 12:10:53 :0 -> libpng warning: iCCP: known incorrect sRGB profile
 Info 12:10:53 :0 -> libpng warning: iCCP: known incorrect sRGB profile
 Info 12:10:53 :0 -> libpng warning: iCCP: known incorrect sRGB profile
 
+1. 路障僵尸死亡回到初始状态
+2. 没有随机阳光
+3. 位置错位
+4. 

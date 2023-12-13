@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-08 13:22:09
- * @LastEditTime: 2023-12-10 21:08:45
+ * @LastEditTime: 2023-12-12 14:03:17
  * @Description:  全局配置类
  */
 
@@ -59,14 +59,19 @@ typedef struct {
 } ZombieData;
 
 enum ZombieType {
-  NAORMAL,
-  BUCKET,
-  CONE
+  NAORMAL = 0,
+  BUCKET = 1,
+  CONE = 2
 };
 
 /* 全局默认配置 */
 typedef struct {
   int default_sun;
+  int first_zombie;
+  int zombie_num;
+  int threshold;
+  int min_interval;
+  int max_interval;
 } DefaultConfig;
 
 class GlobalConfig : public QObject {

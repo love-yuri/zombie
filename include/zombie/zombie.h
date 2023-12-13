@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 18:49:14
- * @LastEditTime: 2023-12-09 13:58:00
+ * @LastEditTime: 2023-12-12 14:27:27
  * @Description: 僵尸基类
  */
 #ifndef ZOMBIE_H
@@ -31,13 +31,7 @@ public:
   virtual void attack(QWeakPointer<Plant>) = 0; /* 攻击 */
 
   /* 僵尸受伤 */
-  virtual void injuried(int blod) {
-    this->blod -= blod;
-    if (this->blod <= 0) {
-      isAlive = false;
-      destory();
-    }
-  }
+  virtual void injuried(int blod) = 0;
   
   virtual void destory() = 0; /* 死亡 */
 

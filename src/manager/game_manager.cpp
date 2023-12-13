@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 20:46:20
- * @LastEditTime: 2023-12-11 17:21:05
+ * @LastEditTime: 2023-12-12 14:16:34
  * @Description:
  */
 #include "include/manager/game_manager.h"
@@ -28,6 +28,7 @@
 #include "include/zombie/zombie.h"
 #include <qcontainerfwd.h>
 #include <QSharedPointer>
+#include <QRandomGenerator>
 #include <qgraphicsscene.h>
 #include <qlist.h>
 #include <qpoint.h>
@@ -37,6 +38,7 @@
 GameManager::GameManager(QObject *parent, QGraphicsScene *scene, GlobalConfig *config) :
   QObject(parent), scene(scene), config(config) {
   sun_ = config->defaultConfig().default_sun;
+  zom_num = 0;
   sun_number = new SunNumber(this);
   scene->addItem(sun_number);
   /* 初始化位置map */
@@ -179,11 +181,31 @@ void GameManager::start(const QList<QString> &plants) {
     }
   }
 
-  i = 0;
-  for (QPoint point : zombiePos()) {
-    zombie_ptr zombie = createZombie(CONE, i++);
-    zombie->setPos(point);
-    // game_manager->addZombie(zombie);
+  QTimer *timer = new QTimer(this);
+  timer->setSingleShot(true);
+  timer->start(config->defaultConfig().first_zombie);
+  auto randomZom = [this] {
+    int pos_i = QRandomGenerator::global()->bounded(zombiePos().size());
+    QPoint p = zombiePos()[pos_i];
+    int zombie_type = QRandomGenerator::global()->bounded(config->zombiesTypeMap().size());
+    ZombieType type = ZombieType(zombie_type);
+    zombie_ptr zombie = createZombie(type, pos_i);
+    zombie->setPos(p);
     scene->addItem(zombie.data());
-  }
+    zom_num++;
+  };
+  connect(timer, &QTimer::timeout, [this, randomZom]() {
+    randomZom();
+    QTimer *main_zom = new QTimer(this);
+    main_zom->setSingleShot(true);
+    main_zom->start(QRandomGenerator::global()->bounded(config->defaultConfig().min_interval, config->defaultConfig().max_interval));
+    connect(main_zom, &QTimer::timeout, [this, main_zom, randomZom]() {
+      randomZom();
+      if (zom_num < config->defaultConfig().threshold) {
+        main_zom->start(QRandomGenerator::global()->bounded(config->defaultConfig().min_interval, config->defaultConfig().max_interval));
+      } else {
+        
+      }
+    });
+  });
 }

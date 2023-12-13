@@ -102,6 +102,11 @@ void GlobalConfig::loadDefaultConfig() {
     QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
     auto j = new QVariantMap(doc.toVariant().toMap());
     default_config.default_sun = j->value("default-sun").toInt();
+    default_config.first_zombie = j->value("first-zombie").toInt();
+    default_config.zombie_num = j->value("zombie-num").toInt();
+    default_config.threshold = j->value("threshold").toInt();
+    default_config.min_interval = j->value("min-interval").toInt();
+    default_config.max_interval = j->value("max-interval").toInt();
     file.close();
   }
 }

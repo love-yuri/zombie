@@ -1,12 +1,13 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-07 14:04:22
- * @LastEditTime: 2023-12-10 14:57:09
+ * @LastEditTime: 2023-12-12 14:46:10
  * @Description: 普通僵尸
  */
 #include "hpp/tools.hpp"
 #include "include/plants/plant.h"
 #include "include/zombie/cone_zombie.h"
+#include "include/manager/game_manager.h"
 #include "include/zombie/zombie.h"
 #include <QTimer>
 #include <qtimer.h>
@@ -39,4 +40,18 @@ void ConeZombie::destory() {
   isAlive = false;
   move_timer->stop();
   destoryGif(":/zombie/normalZombie/ZombieDie.gif");
+}
+
+void ConeZombie::injuried(int blod) {
+  this->blod -= blod;
+  if (this->blod == 10) {
+    movie->stop();
+    QString normal = manager->globalConfig()->zombiesTypeMap().key(ZombieType::NAORMAL);
+    movie->setFileName(manager->globalConfig()->zombiesData().value(normal).default_state);
+    movie->start();
+  }
+  if (this->blod <= 0) {
+    isAlive = false;
+    destory();
+  }
 }

@@ -1,13 +1,16 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-07 14:04:22
- * @LastEditTime: 2023-12-09 13:57:33
+ * @LastEditTime: 2023-12-12 14:46:18
  * @Description: 普通僵尸
  */
 #include "hpp/tools.hpp"
+#include "include/manager/global_config.h"
 #include "include/plants/plant.h"
+#include "include/plants/plant_slot.h"
 #include "include/zombie/bucket_zombie.h"
 #include "include/zombie/zombie.h"
+#include "include/manager/game_manager.h"
 #include <QTimer>
 #include <qtimer.h>
 
@@ -40,4 +43,18 @@ void BucketZombie::destory() {
   isAlive = false;
   move_timer->stop();
   destoryGif(":/zombie/normalZombie/ZombieDie.gif");
+}
+
+void BucketZombie::injuried(int blod) {
+  this->blod -= blod;
+  if (this->blod == 10) {
+    movie->stop();
+    QString normal = manager->globalConfig()->zombiesTypeMap().key(ZombieType::NAORMAL);
+    movie->setFileName(manager->globalConfig()->zombiesData().value(normal).default_state);
+    movie->start();
+  }
+  if (this->blod <= 0) {
+    isAlive = false;
+    destory();
+  }
 }

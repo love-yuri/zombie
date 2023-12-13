@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 17:55:15
- * @LastEditTime: 2023-12-09 14:08:21
+ * @LastEditTime: 2023-12-12 14:46:34
  * @Description: 豌豆射手
  */
 #include "include/plants/wallnut.h"
@@ -38,5 +38,4 @@ void Wallnut::destory() {
     delete item;
   }
   emit deathed();
-  // disconnect();
 }

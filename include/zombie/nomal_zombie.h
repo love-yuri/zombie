@@ -15,6 +15,7 @@ public:
 
   void attack(QWeakPointer<Plant>) override;
   virtual void destory() override;
+  virtual void injuried(int blod) override;
 };
 
 #endif

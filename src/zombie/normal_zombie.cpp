@@ -41,3 +41,11 @@ void NormalZombie::destory() {
   move_timer->stop();
   destoryGif(":/zombie/normalZombie/ZombieDie.gif");
 }
+
+void NormalZombie::injuried(int blod) {
+  this->blod -= blod;
+  if (this->blod <= 0) {
+    isAlive = false;
+    destory();
+  }
+}

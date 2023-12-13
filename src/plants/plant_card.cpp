@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-05 17:37:15
- * @LastEditTime: 2023-12-11 17:43:18
+ * @LastEditTime: 2023-12-12 13:59:07
  * @Description: 植物卡片
  */
 
@@ -83,5 +83,4 @@ void PlantCard::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
   darg->exec();
   timeout = plant_data.cd / 200;
   cd_timer->start(200);
-  qinfo << "结束" << pixmap.size();
 }
