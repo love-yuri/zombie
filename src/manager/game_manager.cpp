@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 20:46:20
- * @LastEditTime: 2023-12-12 14:16:34
+ * @LastEditTime: 2023-12-14 19:43:42
  * @Description:
  */
 #include "include/manager/game_manager.h"
@@ -26,6 +26,7 @@
 #include "include/zombie/cone_zombie.h"
 #include "include/zombie/nomal_zombie.h"
 #include "include/zombie/zombie.h"
+#include "include/zombie/zombie_doctor.h"
 #include <qcontainerfwd.h>
 #include <QSharedPointer>
 #include <QRandomGenerator>
@@ -194,6 +195,7 @@ void GameManager::start(const QList<QString> &plants) {
     scene->addItem(zombie.data());
     zom_num++;
   };
+  createZombieDoctor();
   connect(timer, &QTimer::timeout, [this, randomZom]() {
     randomZom();
     QTimer *main_zom = new QTimer(this);
@@ -204,8 +206,23 @@ void GameManager::start(const QList<QString> &plants) {
       if (zom_num < config->defaultConfig().threshold) {
         main_zom->start(QRandomGenerator::global()->bounded(config->defaultConfig().min_interval, config->defaultConfig().max_interval));
       } else {
-        
       }
     });
   });
+}
+
+void GameManager::createZombieDoctor() {
+  ZombieData zombieData = config->zombiesData().value("zombie_doctor_complete_form");
+  zombie_ptr zombie = QSharedPointer<ZombieDoctor>(new ZombieDoctor(this, 4, zombieData));
+  QWriteLocker locker(&zombie_lock);
+  zombie_list[4].push_back(zombie);
+  QWeakPointer<Zombie> weakZombie = zombie;
+  connect(zombie.data(), &Zombie::deathed, [this, weakZombie]() {
+    if (auto zombie = weakZombie.lock()) {
+      zombie_list[zombie->pos_i].removeOne(zombie);
+      zombie->scene()->removeItem(zombie.data());
+    }
+  });
+  zombie->setPos(zombie_pos.at(4));
+  scene->addItem(zombie.data());
 }

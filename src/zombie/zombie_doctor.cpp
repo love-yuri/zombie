@@ -1,26 +1,26 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-07 14:04:22
- * @LastEditTime: 2023-12-14 20:50:12
+ * @LastEditTime: 2023-12-14 21:05:34
  * @Description: 普通僵尸
  */
 #include "hpp/tools.hpp"
-#include "include/manager/global_config.h"
 #include "include/plants/plant.h"
-#include "include/plants/plant_slot.h"
-#include "include/zombie/bucket_zombie.h"
-#include "include/zombie/zombie.h"
+#include "include/zombie/zombie_doctor.h"
 #include "include/manager/game_manager.h"
+#include <QPropertyAnimation>
+#include "include/zombie/zombie.h"
 #include <QTimer>
+#include <qpoint.h>
 #include <qtimer.h>
 
-BucketZombie::BucketZombie(GameManager *manager, int pos_i, const ZombieData &zombieData) :
+ZombieDoctor::ZombieDoctor(GameManager *manager, int pos_i, const ZombieData &zombieData) :
   Zombie(manager, pos_i, zombieData) {
   move();
 }
 
 /* 僵尸攻击效果 */
-void BucketZombie::attack(QWeakPointer<Plant> weakPlant) {
+void ZombieDoctor::attack(QWeakPointer<Plant> weakPlant) {
   if (auto plant = weakPlant.lock()) {
     move_timer->stop();
     plant->attackZombie = this;
@@ -40,20 +40,23 @@ void BucketZombie::attack(QWeakPointer<Plant> weakPlant) {
 }
 
 /* 受伤效果 */
-void BucketZombie::destory() {
+void ZombieDoctor::destory() {
   isAlive = false;
   move_timer->stop();
   destoryGif(":/zombie/normalZombie/ZombieDie.gif");
 }
 
-void BucketZombie::injuried(int blod) {
+void ZombieDoctor::move() {
+  auto animation = new QPropertyAnimation(this, "pos");
+  animation->setParent(this);
+  animation->setDuration(1000);
+  animation->setStartValue(pos());
+  animation->setEndValue(manager->zombiePos().at(pos_i) + QPointF(-100, -40));
+  animation->start();
+}
+
+void ZombieDoctor::injuried(int blod) {
   this->blod -= blod;
-  if (this->blod == 10) {
-    movie->stop();
-    QString normal = manager->globalConfig()->zombiesTypeMap().key(ZombieType::NAORMAL);
-    movie->setFileName(manager->globalConfig()->zombiesData().value(normal).default_state);
-    movie->start();
-  }
   if (this->blod <= 0) {
     isAlive = false;
     destory();

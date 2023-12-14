@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-03 22:56:48
- * @LastEditTime: 2023-12-12 17:03:13
+ * @LastEditTime: 2023-12-14 19:11:15
  * @Description: 游戏界面
  */
 #include "include/gamewindow.h"
@@ -38,7 +38,7 @@ GameWindow::GameWindow(QWidget *parent) :
   config(new GlobalConfig(this)),
   card_manager(new CardManager(this, scene, config)),
   game_manager(new GameManager(this, scene, config)) {
-  setFixedSize(900, 1166);
+  setFixedSize(900, 600);
   setObjectName("gamewindow");
   setStyleSheet(" \
     #gamewindow{background-color: rgba(0, 0, 0, 0)} \

@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-08 13:22:09
- * @LastEditTime: 2023-12-12 14:03:17
+ * @LastEditTime: 2023-12-14 19:26:23
  * @Description:  全局配置类
  */
 
@@ -59,9 +59,9 @@ typedef struct {
 } ZombieData;
 
 enum ZombieType {
-  NAORMAL = 0,
-  BUCKET = 1,
-  CONE = 2
+  NAORMAL,
+  BUCKET,
+  CONE,
 };
 
 /* 全局默认配置 */

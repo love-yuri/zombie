@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-03 16:31:01
- * @LastEditTime: 2023-12-12 17:03:24
+ * @LastEditTime: 2023-12-14 19:11:32
  * @Description: 游戏开始
  */
 #include "include/game.h"
@@ -26,7 +26,7 @@
 
 Game::Game(QMainWindow *parent) :
   QMainWindow(parent), scene(new QGraphicsScene(this)), view(new QGraphicsView(scene)) {
-  setFixedSize(900, 1166);
+  setFixedSize(900, 620);
   /* init */
   init();
   windowInit();

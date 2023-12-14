@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-04 17:40:16
- * @LastEditTime: 2023-12-10 22:17:57
+ * @LastEditTime: 2023-12-14 09:26:35
  * @Description: 植物卡片
  */
 #ifndef PLANT_CARD_H
@@ -23,6 +23,12 @@ public:
 
   QRectF boundingRect() const override;
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+
+  const PlantData &plantData() const {
+    return plant_data;
+  }
+
+  void startToCd();
 
 protected:
   void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;

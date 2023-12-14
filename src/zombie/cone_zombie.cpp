@@ -14,6 +14,7 @@
 
 ConeZombie::ConeZombie(GameManager *manager, int pos_i, const ZombieData &zombieData) :
   Zombie(manager, pos_i, zombieData) {
+  move();
 }
 
 /* 僵尸攻击效果 */

@@ -26,5 +26,14 @@
     "hurt": 1,
     "speed": 100,
     "interval": 1000
+  },
+  {
+    "name": "zombie_doctor_complete_form",
+    "default_state": ":/zombie/zombie_doctor_complete_form/default.gif",
+    "attack_state" : ":/zombie/zombie_doctor_complete_form/attack.gif",
+    "blod": 100,
+    "hurt": 1,
+    "speed": 100,
+    "interval": 1000
   }
 ]

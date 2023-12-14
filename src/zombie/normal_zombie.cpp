@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-07 14:04:22
- * @LastEditTime: 2023-12-09 13:23:15
+ * @LastEditTime: 2023-12-14 20:49:53
  * @Description: 普通僵尸
  */
 #include "hpp/tools.hpp"
@@ -13,6 +13,7 @@
 
 NormalZombie::NormalZombie(GameManager *manager, int pos_i, const ZombieData &zombieData) :
   Zombie(manager, pos_i, zombieData) {
+  move();
 }
 
 /* 僵尸攻击效果 */

@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-05 17:37:15
- * @LastEditTime: 2023-12-11 17:24:07
+ * @LastEditTime: 2023-12-14 09:27:20
  * @Description: 植物卡片
  */
 
@@ -17,6 +17,7 @@
 #include <qpixmap.h>
 #include "hpp/tools.hpp"
 #include "include/manager/global_config.h"
+#include "include/plants/plant_card.h"
 #include <QPainter>
 #include <qcolor.h>
 #include <qevent.h>
@@ -51,7 +52,14 @@ void PlantSlot::dropEvent(QGraphicsSceneDragDropEvent *event) {
   } else {
     state++;
   }
+  QString name = event->mimeData()->text();
   plant_ptr p = manager->createPlant(event->mimeData()->text(), this);
+  for (PlantCard *card : manager->plantCards()) {
+    if (card->plantData().name == name) {
+      card->startToCd();
+      break;
+    }
+  }
   connect(p.data(), &Plant::deathed, [this]() {
     pixmap = QPixmap(81, 81);
     pixmap.fill(QColor(0, 0, 0, 0));

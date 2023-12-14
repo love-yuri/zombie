@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 19:49:24
- * @LastEditTime: 2023-12-12 14:30:58
+ * @LastEditTime: 2023-12-14 19:27:41
  * @Description: 游戏管理器
  */
 #ifndef GAME_MANAGER_H
@@ -72,6 +72,7 @@ public:
   QWeakPointer<Zombie> firstZombie(int i);
   plant_ptr createPlant(QString, PlantSlot *);
   zombie_ptr createZombie(ZombieType, int);
+  void createZombieDoctor();
   void start(const QList<QString> &plants); /* 游戏开始全局处理 */
   void addSun();
   void delSun(int val);

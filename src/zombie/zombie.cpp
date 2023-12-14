@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 18:51:57
- * @LastEditTime: 2023-12-11 15:57:20
+ * @LastEditTime: 2023-12-14 20:49:41
  * @Description: 僵尸基类
  */
 #include "include/zombie/zombie.h"
@@ -34,7 +34,6 @@ Zombie::Zombie(GameManager *manager, int pos_i, const ZombieData &zombieData) :
   move_timer = new QTimer(this);
   attack_timer = new QTimer(this);
   movie->start();
-  move();
 }
 
 Zombie::~Zombie() {
