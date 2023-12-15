@@ -20,7 +20,7 @@ NormalZombie::NormalZombie(GameManager *manager, int pos_i, const ZombieData &zo
 void NormalZombie::attack(QWeakPointer<Plant> weakPlant) {
   if (auto plant = weakPlant.lock()) {
     move_timer->stop();
-    plant->attackZombie = this;
+    plant->attackZombie.push_back(this);
 
     /* 更换攻击动画 */
     movie->stop();

@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 20:46:20
- * @LastEditTime: 2023-12-14 19:43:42
+ * @LastEditTime: 2023-12-15 20:54:34
  * @Description:
  */
 #include "include/manager/game_manager.h"
@@ -108,8 +108,10 @@ plant_ptr GameManager::createPlant(QString name, PlantSlot *slot) {
   connect(plant.data(), &Plant::deathed, [this, weakPlant, slot]() {
     if (auto plant = weakPlant.lock()) {
       plant_list[slot->ij.x()].removeOne(plant);
-      if (plant->attackZombie) {
-        plant->attackZombie->restart();
+      if (!plant->attackZombie.empty()) {
+        for (auto zombie : plant->attackZombie) {
+          zombie->restart();
+        }
       }
       plant->disconnect(plant.data(), &Plant::near, nullptr, nullptr);
       plant.clear();
@@ -119,6 +121,7 @@ plant_ptr GameManager::createPlant(QString name, PlantSlot *slot) {
 }
 zombie_ptr GameManager::createZombie(ZombieType type, int pos_i) {
   zombie_ptr zombie = nullptr;
+  QPoint p = zombiePos()[pos_i];
   ZombieData zombieData = config->zombiesData().value(config->zombiesTypeMap().key(type));
   switch (type) {
   case ZombieType::NAORMAL: zombie = QSharedPointer<Zombie>(new NormalZombie(this, pos_i, zombieData)); break;
@@ -128,7 +131,12 @@ zombie_ptr GameManager::createZombie(ZombieType type, int pos_i) {
     return nullptr;
   }
   QWriteLocker locker(&zombie_lock);
+  zombie->setPos(p);
   zombie_list[pos_i].push_back(zombie);
+  QList<zombie_ptr> &list = zombie_list[pos_i];
+  std::sort(list.begin(), list.end(), [](zombie_ptr a, zombie_ptr b) {
+    return a->pos().x() < b->pos().x();
+  });
   QWeakPointer<Zombie> weakZombie = zombie;
   connect(zombie.data(), &Zombie::deathed, [this, weakZombie]() {
     if (auto zombie = weakZombie.lock()) {
@@ -187,15 +195,13 @@ void GameManager::start(const QList<QString> &plants) {
   timer->start(config->defaultConfig().first_zombie);
   auto randomZom = [this] {
     int pos_i = QRandomGenerator::global()->bounded(zombiePos().size());
-    QPoint p = zombiePos()[pos_i];
     int zombie_type = QRandomGenerator::global()->bounded(config->zombiesTypeMap().size());
-    ZombieType type = ZombieType(zombie_type);
+    ZombieType type = ZombieType(1);
     zombie_ptr zombie = createZombie(type, pos_i);
-    zombie->setPos(p);
     scene->addItem(zombie.data());
     zom_num++;
   };
-  createZombieDoctor();
+  // createZombieDoctor();
   connect(timer, &QTimer::timeout, [this, randomZom]() {
     randomZom();
     QTimer *main_zom = new QTimer(this);
@@ -223,6 +229,8 @@ void GameManager::createZombieDoctor() {
       zombie->scene()->removeItem(zombie.data());
     }
   });
+  ZombieDoctor *doctor = dynamic_cast<ZombieDoctor *>(zombie.data());
+  doctor->sharedPtr = zombie;
   zombie->setPos(zombie_pos.at(4));
   scene->addItem(zombie.data());
 }

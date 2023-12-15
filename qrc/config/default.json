@@ -1,6 +1,6 @@
 {
   "default-sun": 200, 
-  "first-zombie": 5000,
+  "first-zombie": 8000,
   "zombie-num": 30,
   "threshold": 15,
   "min-interval": 7000,

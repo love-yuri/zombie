@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 19:49:24
- * @LastEditTime: 2023-12-14 19:27:41
+ * @LastEditTime: 2023-12-15 16:32:55
  * @Description: 游戏管理器
  */
 #ifndef GAME_MANAGER_H
@@ -36,15 +36,15 @@ public:
     return pos_map;
   }
 
-  inline const QVector<QList<plant_ptr>> &plantList() const {
+  inline QVector<QList<plant_ptr>> &plantList() {
     return plant_list;
   }
 
-  inline const QVector<QList<zombie_ptr>> &zombieList() const {
+  inline QVector<QList<zombie_ptr>> &zombieList() {
     return zombie_list;
   }
 
-  inline const QVector<QVector<PlantSlot *>> &slotList() const {
+  inline QVector<QVector<PlantSlot *>> &slotList() {
     return slot_list;
   }
 

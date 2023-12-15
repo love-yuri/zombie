@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 17:55:15
- * @LastEditTime: 2023-12-10 16:26:55
+ * @LastEditTime: 2023-12-15 16:53:54
  * @Description: 豌豆射手
  */
 #include "include/plants/squash.h"
@@ -36,7 +36,7 @@ Squash::Squash(PlantSlot *slot, const PlantData &data) :
       movie->setFileName(":/plants/dazui/ChomperDigest.gif");
       movie->start();
       QWeakPointer<Zombie> weakZombie = manager->firstZombie(ij.x());
-      attackZombie = nullptr;
+      attackZombie.clear();
       if (auto zombie = weakZombie.lock()) {
         if (zombie->alive()) {
           isEating = true;

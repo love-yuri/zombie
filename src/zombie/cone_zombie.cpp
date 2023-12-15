@@ -1,10 +1,11 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-07 14:04:22
- * @LastEditTime: 2023-12-12 14:46:10
+ * @LastEditTime: 2023-12-15 21:18:40
  * @Description: 普通僵尸
  */
 #include "hpp/tools.hpp"
+#include "include/manager/global_config.h"
 #include "include/plants/plant.h"
 #include "include/zombie/cone_zombie.h"
 #include "include/manager/game_manager.h"
@@ -27,7 +28,7 @@ void ConeZombie::attack(QWeakPointer<Plant> weakPlant) {
       }
     });
     move_timer->stop();
-    plant->attackZombie = this;
+    plant->attackZombie.push_back(this);
 
     /* 更换攻击动画 */
     movie->stop();
@@ -48,7 +49,14 @@ void ConeZombie::injuried(int blod) {
   if (this->blod == 10) {
     movie->stop();
     QString normal = manager->globalConfig()->zombiesTypeMap().key(ZombieType::NAORMAL);
-    movie->setFileName(manager->globalConfig()->zombiesData().value(normal).default_state);
+    ZombieData data = manager->globalConfig()->zombiesData().value(normal);
+    zombieData.default_state = data.default_state;
+    zombieData.attack_state = data.attack_state;
+    if (isAttacking) {
+      movie->setFileName(data.attack_state);
+    } else {
+      movie->setFileName(data.default_state);
+    }
     movie->start();
   }
   if (this->blod <= 0) {

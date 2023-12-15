@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 17:55:15
- * @LastEditTime: 2023-12-10 17:23:57
+ * @LastEditTime: 2023-12-15 21:12:13
  * @Description: 豌豆射手
  */
 #include "include/plants/spikeweed.h"
@@ -30,7 +30,7 @@ Spikeweed::Spikeweed(PlantSlot *slot, const PlantData &data) :
 void Spikeweed::attack() {
   for (QWeakPointer<Zombie> zombieWeak : manager->zombieList().at(ij.x())) {
     if (auto zombie = zombieWeak.lock()) {
-      if (zombie.data()->collidesWithItem(slot)) {
+      if (zombie.data()->collidesWithItem(slot) && zombie->alive()) {
         zombie->injuried(plantData.hurt);
       }
     }

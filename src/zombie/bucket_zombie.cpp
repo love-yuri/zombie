@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-07 14:04:22
- * @LastEditTime: 2023-12-14 20:50:12
+ * @LastEditTime: 2023-12-15 21:18:55
  * @Description: 普通僵尸
  */
 #include "hpp/tools.hpp"
@@ -17,13 +17,15 @@
 BucketZombie::BucketZombie(GameManager *manager, int pos_i, const ZombieData &zombieData) :
   Zombie(manager, pos_i, zombieData) {
   move();
+  isAttacking = false;
 }
 
 /* 僵尸攻击效果 */
 void BucketZombie::attack(QWeakPointer<Plant> weakPlant) {
   if (auto plant = weakPlant.lock()) {
+    isAttacking = true;
     move_timer->stop();
-    plant->attackZombie = this;
+    plant->attackZombie.push_back(this);
 
     /* 更换攻击动画 */
     movie->stop();
@@ -41,6 +43,7 @@ void BucketZombie::attack(QWeakPointer<Plant> weakPlant) {
 
 /* 受伤效果 */
 void BucketZombie::destory() {
+  isAttacking = false;
   isAlive = false;
   move_timer->stop();
   destoryGif(":/zombie/normalZombie/ZombieDie.gif");
@@ -51,7 +54,14 @@ void BucketZombie::injuried(int blod) {
   if (this->blod == 10) {
     movie->stop();
     QString normal = manager->globalConfig()->zombiesTypeMap().key(ZombieType::NAORMAL);
-    movie->setFileName(manager->globalConfig()->zombiesData().value(normal).default_state);
+    ZombieData data = manager->globalConfig()->zombiesData().value(normal);
+    zombieData.default_state = data.default_state;
+    zombieData.attack_state = data.attack_state;
+    if (isAttacking) {
+      movie->setFileName(data.attack_state);
+    } else {
+      movie->setFileName(data.default_state);
+    }
     movie->start();
   }
   if (this->blod <= 0) {

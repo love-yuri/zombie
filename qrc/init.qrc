@@ -97,8 +97,8 @@
         <file>zombie/zombie_doctor_complete_form/default.gif</file>
         <file>zombie/zombie_doctor_complete_form/died.gif</file>
         <file>zombie/zombie_doctor_complete_form/fire.gif</file>
-        <file>zombie/zombie_doctor_complete_form/attack.gif</file>
-
+        <file>zombie/zombie_doctor_complete_form/attack_1.gif</file>
+        <file>zombie/zombie_doctor_complete_form/attack_2.gif</file>
         <file>audio/buttonclick.wav</file>
         <file>audio/plant1.wav</file>
         <file>audio/potato_mine.wav</file>

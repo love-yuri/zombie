@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 17:55:15
- * @LastEditTime: 2023-12-11 16:34:03
+ * @LastEditTime: 2023-12-15 16:53:47
  * @Description: 豌豆射手
  */
 #include "include/plants/potato.h"
@@ -26,7 +26,7 @@ Potato::Potato(PlantSlot *slot, const PlantData &data) :
   connect(this, &Potato::near, [this] {
     QWeakPointer<Zombie> weakZombie = manager->firstZombie(ij.x());
     destory();
-    attackZombie = nullptr;
+    attackZombie.clear();
     if (auto zombie = weakZombie.lock()) {
       if (zombie->alive()) {
         zombie->destoryGif(":/zombie/boomdead.gif");

@@ -12,6 +12,7 @@
 #include <QGraphicsObject>
 #include <qgraphicsitem.h>
 #include <qgraphicsscene.h>
+#include <qlist.h>
 #include <qpixmap.h>
 #include <qpoint.h>
 #include <qtimer.h>
@@ -48,7 +49,7 @@ public:
     return slot;
   }
 
-  Zombie *attackZombie;
+  QList<Zombie *> attackZombie;
 
 signals:
   void deathed(); /* 植物死亡 */

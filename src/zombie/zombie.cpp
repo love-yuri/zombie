@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 18:51:57
- * @LastEditTime: 2023-12-14 20:49:41
+ * @LastEditTime: 2023-12-15 20:47:21
  * @Description: 僵尸基类
  */
 #include "include/zombie/zombie.h"
@@ -20,6 +20,7 @@ Zombie::Zombie(GameManager *manager, int pos_i, const ZombieData &zombieData) :
   // setZValue(60);
   deathedCount = 0;
   isAlive = true;
+  isZombieDoctor = false;
 
   /* 播放默认状态 */
   movie = new QMovie(zombieData.default_state);
@@ -81,6 +82,7 @@ void Zombie::move() {
 
 void Zombie::restart() {
   if (isAlive) {
+    isAttacking = false;
     movie->stop();
     movie->setFileName(zombieData.default_state);
     move_timer->start(zombieData.speed);
@@ -90,6 +92,10 @@ void Zombie::restart() {
 
 void Zombie::destoryGif(QString fileName) {
   // movie->disconnect(movie, &QMovie::frameChanged, nullptr, nullptr);
+  if (isZombieDoctor) {
+    injuried(50);
+    return;
+  }
   isAlive = false;
   move_timer->stop();
   movie->stop();

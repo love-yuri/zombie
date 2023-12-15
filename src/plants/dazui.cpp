@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 17:55:15
- * @LastEditTime: 2023-12-11 15:13:08
+ * @LastEditTime: 2023-12-15 16:53:36
  * @Description: 豌豆射手
  */
 #include "include/plants/dazui.h"
@@ -37,7 +37,7 @@ Dazui::Dazui(PlantSlot *slot, const PlantData &data) :
       movie->setFileName(":/plants/dazui/ChomperDigest.gif");
       movie->start();
       QWeakPointer<Zombie> weakZombie = manager->firstZombie(ij.x());
-      attackZombie = nullptr;
+      attackZombie.clear();
       if (auto zombie = weakZombie.lock()) {
         if (zombie->alive()) {
           isEating = true;
