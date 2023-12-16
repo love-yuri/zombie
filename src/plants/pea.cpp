@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 17:55:15
- * @LastEditTime: 2023-12-10 15:15:02
+ * @LastEditTime: 2023-12-16 19:59:06
  * @Description: 豌豆射手
  */
 #include "include/plants/pea.h"
@@ -26,6 +26,9 @@ Pea::Pea(PlantSlot *slot, const PlantData &data) :
 
 /* 攻击 */
 void Pea::attack() {
+  if (manager->zombieList().at(ij.x()).empty()) {
+    return;
+  }
   PeaAttack *attack = new PeaAttack(":/plants/bullet_normal.png");
   attack->setPos(slot->pos() + QPointF(30, 10));
   scene->addItem(attack);

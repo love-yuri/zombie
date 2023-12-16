@@ -42,6 +42,10 @@ public:
     return manager;
   }
 
+  inline void setState(int state) {
+    this->state = state;
+  }
+
 signals:
   void destory();
 

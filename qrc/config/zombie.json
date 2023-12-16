@@ -13,7 +13,7 @@
     "name": "bucket",
     "default_state": ":/zombie/bucketZombie/BucketheadZombie.gif",
     "attack_state" : ":/zombie/bucketZombie/BucketheadZombieAttack.gif",
-    "blod": 15,
+    "blod": 30,
     "hurt": 1,
     "speed": 100,
     "interval": 1000
@@ -31,9 +31,9 @@
     "name": "zombie_doctor_complete_form",
     "default_state": ":/zombie/zombie_doctor_complete_form/default.gif",
     "attack_state" : ":/zombie/zombie_doctor_complete_form/attack.gif",
-    "blod": 100,
+    "blod": 20,
     "hurt": 1,
     "speed": 100,
-    "interval": 1000
+    "interval": 60000
   }
 ]

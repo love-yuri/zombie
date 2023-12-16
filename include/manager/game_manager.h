@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 19:49:24
- * @LastEditTime: 2023-12-15 16:32:55
+ * @LastEditTime: 2023-12-16 22:47:44
  * @Description: 游戏管理器
  */
 #ifndef GAME_MANAGER_H
@@ -69,7 +69,7 @@ public:
   }
 
   QWeakPointer<Plant> firstPlant(int i) ;
-  QWeakPointer<Zombie> firstZombie(int i);
+  QWeakPointer<Zombie> firstZombie(int i, const QPointF &pos);
   plant_ptr createPlant(QString, PlantSlot *);
   zombie_ptr createZombie(ZombieType, int);
   void createZombieDoctor();
@@ -78,7 +78,8 @@ public:
   void delSun(int val);
 
 signals:
-  void lastZoms();
+  void victory();
+  void gameOver();
 
 private:
   QVector<QVector<QPoint>> pos_map;
@@ -94,6 +95,7 @@ private:
   QGraphicsScene *scene;
   GlobalConfig *config;
   SunNumber *sun_number;
+
   QReadWriteLock plant_lock;
   QReadWriteLock zombie_lock;
   int sun_;

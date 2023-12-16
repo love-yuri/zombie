@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-03 16:29:29
- * @LastEditTime: 2023-12-06 19:55:17
+ * @LastEditTime: 2023-12-16 21:23:27
  * @Description: 游戏界面
  */
 #ifndef GAME_H
@@ -21,6 +21,8 @@ public:
 
 signals:
   void closed();
+  void gameOver();
+  void victory();
 
 protected:
   void closeEvent(QCloseEvent *event) override {

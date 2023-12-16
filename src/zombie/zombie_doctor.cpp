@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-07 14:04:22
- * @LastEditTime: 2023-12-15 20:34:01
+ * @LastEditTime: 2023-12-16 20:45:04
  * @Description: 普通僵尸
  */
 #include "hpp/tools.hpp"
@@ -24,7 +24,7 @@ ZombieDoctor::ZombieDoctor(GameManager *manager, int pos_i, const ZombieData &zo
   connect(attack_timer, &QTimer::timeout, [this]() {
     attack(QWeakPointer<Plant>());
   });
-  attack_timer->start(15000);
+  attack_timer->start(zombieData.interval);
 }
 
 /* 僵尸攻击效果 */
@@ -58,12 +58,12 @@ void ZombieDoctor::attack(QWeakPointer<Plant> weakPlant) {
   });
 }
 
-/* 受伤效果 */
+/* 死亡效果 */
 void ZombieDoctor::destory() {
   isAlive = false;
   move_timer->stop();
   sharedPtr = QSharedPointer<Zombie>();
-  QString file = QString(":/zombie/normalZombie/ZombieDie.gif");
+  QString file = QString(":/zombie/zombie_doctor_complete_form/died.gif");
   destoryGif(file);
 }
 

@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-03 16:31:01
- * @LastEditTime: 2023-12-14 19:11:32
+ * @LastEditTime: 2023-12-16 21:25:14
  * @Description: 游戏开始
  */
 #include "include/game.h"
@@ -66,6 +66,9 @@ void Game::windowInit() {
   proxyWidget->setZValue(1);
   proxyWidget->setPos(500, 0);
   scene->addItem(proxyWidget);
+
+  connect(game, &GameWindow::gameOver, this, &Game::gameOver);
+  connect(game, &GameWindow::victory, this, &Game::victory);
   view->setRenderHint(QPainter::Antialiasing);
 
   connect(game, &GameWindow::gameStart, [this, game, proxyWidget]() {

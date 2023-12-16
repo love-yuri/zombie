@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-05 17:37:15
- * @LastEditTime: 2023-12-14 09:27:20
+ * @LastEditTime: 2023-12-16 22:05:00
  * @Description: 植物卡片
  */
 
@@ -48,6 +48,7 @@ void PlantSlot::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 
 void PlantSlot::dropEvent(QGraphicsSceneDragDropEvent *event) {
   if (state != 0) {
+    qinfo << "不是0, 返回";
     return;
   } else {
     state++;

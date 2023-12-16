@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-09-27 13:27:55
- * @LastEditTime: 2023-12-11 21:14:45
+ * @LastEditTime: 2023-12-16 22:26:28
  * @Description:
  */
 
@@ -9,7 +9,9 @@
 #include "../ui/ui_mainwindow.h"
 #include <qimage.h>
 #include <qlabel.h>
+#include <QMessageBox>
 #include <qmainwindow.h>
+#include <qmessagebox.h>
 #include <qsize.h>
 #include <qsoundeffect.h>
 #include <qwindowdefs.h>
@@ -19,6 +21,7 @@
 #include "include/game.h"
 #include "include/menu/info_dialog.h"
 #include <QSoundEffect>
+#include "include/menu/last_dialog.h"
 #include "include/menu/setting_dialog.h"
 
 MainWindow::MainWindow(QMainWindow *parent) :
@@ -69,6 +72,22 @@ void MainWindow::menuInit() {
       Game *game = new Game();
       game->show();
       this->hide();
+      connect(game, &Game::victory, this, [this, game] {
+        LastDialog *dialog = new LastDialog(this, ":/victory.png");
+        game->close();
+        hide();
+        connect(dialog, &LastDialog::clicked, [this, game] {
+          show();
+        });
+      });
+      connect(game, &Game::gameOver, this, [this, game] {
+        LastDialog *dialog = new LastDialog(this, ":/gameOver.png");
+        game->close();
+        hide();
+        connect(dialog, &LastDialog::clicked, [this] {
+          show();
+        });
+      });
       connect(game, &Game::closed, this, [this, game]() {
         game->disconnect();
         show();

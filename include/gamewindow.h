@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-03 22:54:33
- * @LastEditTime: 2023-12-10 22:58:33
+ * @LastEditTime: 2023-12-16 21:23:38
  * @Description: 游戏主窗口
  */
 #ifndef GAME_WINDOW_H
@@ -30,7 +30,9 @@ public:
   virtual ~GameWindow();
 
 signals:
-  void gameStart();  
+  void gameStart();
+  void gameOver();
+  void victory();
 
 private:
   QGraphicsScene *scene;

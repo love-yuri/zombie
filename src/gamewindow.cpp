@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-03 22:56:48
- * @LastEditTime: 2023-12-14 19:11:15
+ * @LastEditTime: 2023-12-16 22:27:58
  * @Description: 游戏界面
  */
 #include "include/gamewindow.h"
@@ -52,6 +52,9 @@ GameWindow::GameWindow(QWidget *parent) :
   view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);   // 隐藏垂直滚动条
   view->setParent(this);
   view->setObjectName("view");
+
+  connect(game_manager, &GameManager::gameOver, this, &GameWindow::gameOver);
+  connect(game_manager, &GameManager::victory, this, &GameWindow::victory);
 
   init();
 }

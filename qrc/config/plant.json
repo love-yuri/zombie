@@ -20,7 +20,7 @@
     "img_drop": ":/rest/Chomper1.gif",
     "default_state": ":/plants/dazui/1.gif",
     "attack_state" : ":/plants/dazui/ChomperAttack.gif",
-    "blod": 1000,
+    "blod": 10,
     "hurt": 122,
     "sun": 150,
     "cd": 10000,
@@ -120,8 +120,8 @@
     "attack_state" : ":/zombie/coneZombie/ConeheadZombieAttack.gif",
     "blod": 0,
     "hurt": 122,
-    "sun": 50,
-    "cd": 10000,
+    "sun": 25,
+    "cd": 15000,
     "interval": 0, 
     "isMelee": true
   },
@@ -136,7 +136,7 @@
     "hurt": 122,
     "sun": 50,
     "cd": 7400,
-    "interval": 10000,
+    "interval": 20000,
     "isMelee": false
   }
 ]

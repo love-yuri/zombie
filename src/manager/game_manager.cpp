@@ -1,10 +1,11 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 20:46:20
- * @LastEditTime: 2023-12-15 20:54:34
+ * @LastEditTime: 2023-12-16 22:48:05
  * @Description:
  */
 #include "include/manager/game_manager.h"
+#include "hpp/sun.hpp"
 #include "hpp/sun_number.hpp"
 #include "hpp/tools.hpp"
 #include "include/manager/global_config.h"
@@ -68,10 +69,15 @@ QWeakPointer<Plant> GameManager::firstPlant(int i) {
   return plant_list[i].last();
 }
 
-QWeakPointer<Zombie> GameManager::firstZombie(int i) {
+QWeakPointer<Zombie> GameManager::firstZombie(int i, const QPointF &pos) {
   QReadLocker locker(&zombie_lock);
   if (i >= zombie_list.size() || zombie_list[i].isEmpty()) {
     return QWeakPointer<Zombie>();
+  }
+  for (zombie_ptr zombie : zombie_list[i]) {
+    if (zombie->alive() && zombie->pos().x() >= pos.x()) {
+      return zombie;
+    }
   }
   return zombie_list[i].first();
 }
@@ -137,6 +143,7 @@ zombie_ptr GameManager::createZombie(ZombieType type, int pos_i) {
   std::sort(list.begin(), list.end(), [](zombie_ptr a, zombie_ptr b) {
     return a->pos().x() < b->pos().x();
   });
+  zom_num++;
   QWeakPointer<Zombie> weakZombie = zombie;
   connect(zombie.data(), &Zombie::deathed, [this, weakZombie]() {
     if (auto zombie = weakZombie.lock()) {
@@ -144,6 +151,7 @@ zombie_ptr GameManager::createZombie(ZombieType type, int pos_i) {
       zombie->scene()->removeItem(zombie.data());
     }
   });
+  connect(zombie.data(), &Zombie::gameOver, this, &GameManager::gameOver);
   return zombie;
 }
 
@@ -190,16 +198,19 @@ void GameManager::start(const QList<QString> &plants) {
     }
   }
 
+  /* 僵尸产生 */
   QTimer *timer = new QTimer(this);
   timer->setSingleShot(true);
   timer->start(config->defaultConfig().first_zombie);
   auto randomZom = [this] {
     int pos_i = QRandomGenerator::global()->bounded(zombiePos().size());
     int zombie_type = QRandomGenerator::global()->bounded(config->zombiesTypeMap().size());
-    ZombieType type = ZombieType(1);
+    ZombieType type = ZombieType(zombie_type);
+    if (zom_num <= config->defaultConfig().normal_zombie_num) {
+      type = ZombieType::NAORMAL;
+    }
     zombie_ptr zombie = createZombie(type, pos_i);
     scene->addItem(zombie.data());
-    zom_num++;
   };
   // createZombieDoctor();
   connect(timer, &QTimer::timeout, [this, randomZom]() {
@@ -212,8 +223,29 @@ void GameManager::start(const QList<QString> &plants) {
       if (zom_num < config->defaultConfig().threshold) {
         main_zom->start(QRandomGenerator::global()->bounded(config->defaultConfig().min_interval, config->defaultConfig().max_interval));
       } else {
+        createZombieDoctor();
+        QTimer *timer = new QTimer(this);
+        timer->start(1200);
+        connect(timer, &QTimer::timeout, [this, timer, randomZom] {
+          randomZom();
+          if (zom_num >= config->defaultConfig().zombie_num) {
+            timer->stop();
+          }
+        });
       }
     });
+  });
+
+  /* 随机产生太阳花 */
+  QTimer *sun_timer = new QTimer(this);
+  sun_timer->start(config->defaultConfig().global_sun_time);
+  connect(sun_timer, &QTimer::timeout, [this]() {
+    Sun *sun = new Sun(this);
+    int x = QRandomGenerator::global()->bounded(600);
+    int y = QRandomGenerator::global()->bounded(500);
+    sun->setPos(QPointF(20, 20));
+    scene->addItem(sun);
+    sun->moveTo(QPoint(x, y));
   });
 }
 
@@ -227,6 +259,7 @@ void GameManager::createZombieDoctor() {
     if (auto zombie = weakZombie.lock()) {
       zombie_list[zombie->pos_i].removeOne(zombie);
       zombie->scene()->removeItem(zombie.data());
+      emit victory();
     }
   });
   ZombieDoctor *doctor = dynamic_cast<ZombieDoctor *>(zombie.data());

@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 17:55:15
- * @LastEditTime: 2023-12-15 16:53:36
+ * @LastEditTime: 2023-12-16 22:08:26
  * @Description: 豌豆射手
  */
 #include "include/plants/dazui.h"
@@ -36,7 +36,7 @@ Dazui::Dazui(PlantSlot *slot, const PlantData &data) :
       movie->stop();
       movie->setFileName(":/plants/dazui/ChomperDigest.gif");
       movie->start();
-      QWeakPointer<Zombie> weakZombie = manager->firstZombie(ij.x());
+      QWeakPointer<Zombie> weakZombie = manager->firstZombie(ij.x(), this->slot->pos());
       attackZombie.clear();
       if (auto zombie = weakZombie.lock()) {
         if (zombie->alive()) {
@@ -48,7 +48,7 @@ Dazui::Dazui(PlantSlot *slot, const PlantData &data) :
             movie->stop();
             movie->setFileName(plantData.default_state);
             movie->start();
-            QWeakPointer<Zombie> weakZombie = manager->firstZombie(ij.x());
+            QWeakPointer<Zombie> weakZombie = manager->firstZombie(ij.x(), this->slot->pos());
             isEating = false;
             if (auto zombie = weakZombie.lock()) {
               if (zombie->alive() && this->slot->collidesWithItem(zombie.data())) {
@@ -59,10 +59,6 @@ Dazui::Dazui(PlantSlot *slot, const PlantData &data) :
           timer->start(10000);
         }
       }
-      zombie_ptr zombie = manager->createZombie(NAORMAL, ij.x());
-      zombie->setPos(manager->zombiePos().at(ij.x()));
-      // game_manager->addZombie(zombie);
-      scene->addItem(zombie.data());
     });
     movie->start();
   });

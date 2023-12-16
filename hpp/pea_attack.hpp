@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-08 20:14:25
- * @LastEditTime: 2023-12-15 16:13:31
+ * @LastEditTime: 2023-12-16 22:49:37
  * @Description: 豌豆射手的种子
  */
 #ifndef PEA_ATTACK_HPP
@@ -42,7 +42,7 @@ public:
     connect(move_timer, &QTimer::timeout, [this, hurt, manager, plant]() {
       setPos(pos() + QPointF(10, 0));
       update();
-      if (auto zombie = manager->firstZombie(plant->ij.x()).lock()) {
+      if (auto zombie = manager->firstZombie(plant->ij.x(), pos()).lock()) {
         if (pos().x() >= scene()->sceneRect().width()) {
           scene()->removeItem(this);
           // items.removeOne(this);

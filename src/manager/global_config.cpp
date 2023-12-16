@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-08 14:26:16
- * @LastEditTime: 2023-12-14 19:26:57
+ * @LastEditTime: 2023-12-16 20:13:42
  * @Description: 全局配置文件
  */
 #include "include/manager/global_config.h"
@@ -107,6 +107,8 @@ void GlobalConfig::loadDefaultConfig() {
     default_config.threshold = j->value("threshold").toInt();
     default_config.min_interval = j->value("min-interval").toInt();
     default_config.max_interval = j->value("max-interval").toInt();
+    default_config.normal_zombie_num = j->value("normal-zombie-num").toInt();
+    default_config.global_sun_time = j->value("global-sun-time").toInt();
     file.close();
   }
 }

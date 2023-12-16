@@ -2,6 +2,8 @@
     <qresource prefix="/">
 
         <file>map.png</file>
+        <file>victory.png</file>
+        <file>gameOver.png</file>
 
         <file>startMenu/button.png</file>
         <file>startMenu/we.png</file>

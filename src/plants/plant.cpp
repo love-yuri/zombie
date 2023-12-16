@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 21:32:53
- * @LastEditTime: 2023-12-11 13:39:20
+ * @LastEditTime: 2023-12-16 22:36:40
  * @Description: 植物基类
  */
 #include "include/plants/plant.h"
@@ -15,6 +15,7 @@ Plant::Plant(PlantSlot *slot, const PlantData &data) :
   slot(slot), plantData(data), manager(slot->gameManager()), ij(slot->ij), blod(data.blod) {
   this->scene = slot->mutableScene();
   this->pixmap = slot->mutablePixmap();
+  isAlive = true;
   deathedCount = 0;
   /* 播放默认效果 */
   movie = new QMovie(data.default_state);
@@ -29,7 +30,6 @@ Plant::Plant(PlantSlot *slot, const PlantData &data) :
   /* 绑定攻击 */
   attack_timer = new QTimer(this);
   if (data.interval > 0) {
-    
     if (data.isMelee) {
       // connect(this, &Plant::near, [this] {
       //   attack_timer->start(plantData.interval);

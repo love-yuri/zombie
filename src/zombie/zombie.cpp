@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 18:51:57
- * @LastEditTime: 2023-12-15 20:47:21
+ * @LastEditTime: 2023-12-16 22:35:11
  * @Description: 僵尸基类
  */
 #include "include/zombie/zombie.h"
@@ -69,7 +69,7 @@ void Zombie::move() {
     QWeakPointer<Plant> weakPlant = manager->firstPlant(pos_i);
     if (auto plant = weakPlant.lock()) {
       /* 如果发生了碰撞 */
-      if (collidesWithItem(plant->plantSlot())) {
+      if (collidesWithItem(plant->plantSlot()) && plant->alive()) {
         emit plant->near();
         if (isAlive) {
           attack(weakPlant);
@@ -90,12 +90,7 @@ void Zombie::restart() {
   }
 }
 
-void Zombie::destoryGif(QString fileName) {
-  // movie->disconnect(movie, &QMovie::frameChanged, nullptr, nullptr);
-  if (isZombieDoctor) {
-    injuried(50);
-    return;
-  }
+void Zombie::destoryGif(const QString &fileName) {
   isAlive = false;
   move_timer->stop();
   movie->stop();

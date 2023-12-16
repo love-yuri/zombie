@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-08 13:22:09
- * @LastEditTime: 2023-12-14 19:26:23
+ * @LastEditTime: 2023-12-16 20:08:13
  * @Description:  全局配置类
  */
 
@@ -66,12 +66,14 @@ enum ZombieType {
 
 /* 全局默认配置 */
 typedef struct {
-  int default_sun;
-  int first_zombie;
-  int zombie_num;
-  int threshold;
-  int min_interval;
-  int max_interval;
+  int default_sun; // 默认阳光
+  int first_zombie; // 第一个僵尸出现
+  int zombie_num; // 僵尸数量
+  int threshold; // 僵尸出现阈值
+  int min_interval; // 僵尸出现最小间隔
+  int max_interval; // 僵尸出现最大间隔
+  int global_sun_time; // 阳光时间
+  int normal_zombie_num; // 普通僵尸起始数量
 } DefaultConfig;
 
 class GlobalConfig : public QObject {

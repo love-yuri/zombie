@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 18:49:14
- * @LastEditTime: 2023-12-15 21:16:49
+ * @LastEditTime: 2023-12-16 20:30:23
  * @Description: 僵尸基类
  */
 #ifndef ZOMBIE_H
@@ -39,8 +39,12 @@ public:
     return isAlive;
   }
 
+  inline const bool zombieDoctor() const {
+    return isZombieDoctor;
+  }
+
   void restart();
-  void destoryGif(QString fileName);
+  void destoryGif(const QString &);
 
 signals:
   void gameOver(); /* 游戏结束 */

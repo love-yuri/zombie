@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 17:55:15
- * @LastEditTime: 2023-12-11 15:55:49
+ * @LastEditTime: 2023-12-16 22:06:00
  * @Description: 豌豆射手
  */
 #include "include/plants/cherry.h"
@@ -59,6 +59,7 @@ void Cherry::destoryGif(QString fileName) {
   movie->setFileName(fileName);
   movie->start();
   connect(movie, &QMovie::finished, [this] {
+    slot->setState(0);
     emit deathed();
   });
 }
@@ -73,7 +74,7 @@ void Cherry::boom(int x, int y) {
   auto slot = manager->slotList().at(x).at(y);
   for (QWeakPointer<Zombie> zombieWeak : manager->zombieList().at(x)) {
     if (auto zombie = zombieWeak.lock()) {
-      if (zombie->collidesWithItem(slot)) {
+      if (zombie->collidesWithItem(slot) && !zombie->zombieDoctor()) {
         zombie->destoryGif(":/zombie/boomdead.gif");
       }
     }
