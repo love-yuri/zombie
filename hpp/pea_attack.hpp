@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-08 20:14:25
- * @LastEditTime: 2023-12-16 22:49:37
+ * @LastEditTime: 2023-12-19 09:09:00
  * @Description: 豌豆射手的种子
  */
 #ifndef PEA_ATTACK_HPP
@@ -26,6 +26,7 @@ public:
   }
 
   virtual ~PeaAttack() {
+    move_timer->stop();
   }
   QRectF boundingRect() const override {
     return QRectF(pixmap.rect());
@@ -42,6 +43,9 @@ public:
     connect(move_timer, &QTimer::timeout, [this, hurt, manager, plant]() {
       setPos(pos() + QPointF(10, 0));
       update();
+      if (plant == nullptr || plant->ij.x() < 0 || plant->ij.x() > manager->zombieList().size()) {
+        return;
+      }
       if (auto zombie = manager->firstZombie(plant->ij.x(), pos()).lock()) {
         if (pos().x() >= scene()->sceneRect().width()) {
           scene()->removeItem(this);
@@ -62,7 +66,6 @@ public:
 private:
   QPixmap pixmap;
   QTimer *move_timer;
-  ;
 };
 
 #endif

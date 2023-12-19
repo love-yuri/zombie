@@ -1,13 +1,14 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-07 14:04:22
- * @LastEditTime: 2023-12-16 20:45:04
+ * @LastEditTime: 2023-12-19 08:41:47
  * @Description: 普通僵尸
  */
 #include "hpp/tools.hpp"
 #include "include/plants/plant.h"
 #include "include/zombie/zombie_doctor.h"
 #include "include/manager/game_manager.h"
+#include <QRandomGenerator>
 #include "hpp/doctor_fire.hpp"
 #include <QPropertyAnimation>
 #include "include/zombie/zombie.h"
@@ -29,6 +30,7 @@ ZombieDoctor::ZombieDoctor(GameManager *manager, int pos_i, const ZombieData &zo
 
 /* 僵尸攻击效果 */
 void ZombieDoctor::attack(QWeakPointer<Plant> weakPlant) {
+  static auto move_list = {0, 2, 4, 3, 5};
   movie->stop();
   movie->setFileName(":/zombie/zombie_doctor_complete_form/attack_1.gif");
   movie->start();
@@ -48,12 +50,14 @@ void ZombieDoctor::attack(QWeakPointer<Plant> weakPlant) {
       movie->stop();
       movie->setFileName(zombieData.default_state);
       movie->start();
-      pos_i--;
-      if (pos_i >= 0) {
-        manager->zombieList()[pos_i + 1].removeOne(sharedPtr);
-        manager->zombieList()[pos_i].push_back(sharedPtr);
-        moveTo(manager->zombiePos().at(pos_i) - QPointF(130, 0));
+      manager->zombieList()[pos_i].removeOne(sharedPtr);
+      int new_i = QRandomGenerator::global()->bounded(manager->zombiePos().size());
+      while (new_i == pos_i) {
+        new_i = QRandomGenerator::global()->bounded(manager->zombiePos().size());
       }
+      pos_i = new_i;
+      manager->zombieList()[pos_i].push_back(sharedPtr);
+      moveTo(manager->zombiePos().at(pos_i) - QPointF(130, 0));
     });
   });
 }

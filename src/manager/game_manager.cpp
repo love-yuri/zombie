@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 20:46:20
- * @LastEditTime: 2023-12-16 22:48:05
+ * @LastEditTime: 2023-12-19 09:22:14
  * @Description:
  */
 #include "include/manager/game_manager.h"
@@ -70,13 +70,19 @@ QWeakPointer<Plant> GameManager::firstPlant(int i) {
 }
 
 QWeakPointer<Zombie> GameManager::firstZombie(int i, const QPointF &pos) {
+  QList<zombie_ptr> &list = zombie_list[i];
+  std::sort(list.begin(), list.end(), [](zombie_ptr a, zombie_ptr b) {
+    return a->pos().x() < b->pos().x();
+  });
   QReadLocker locker(&zombie_lock);
   if (i >= zombie_list.size() || zombie_list[i].isEmpty()) {
     return QWeakPointer<Zombie>();
   }
-  for (zombie_ptr zombie : zombie_list[i]) {
-    if (zombie->alive() && zombie->pos().x() >= pos.x()) {
-      return zombie;
+  for (QWeakPointer<Zombie> zombie : zombie_list[i]) {
+    if (auto zom = zombie.lock()) {
+      if (zom->alive() && zom->pos().x() >= pos.x()) {
+        return zom;
+      }
     }
   }
   return zombie_list[i].first();
@@ -225,7 +231,7 @@ void GameManager::start(const QList<QString> &plants) {
       } else {
         createZombieDoctor();
         QTimer *timer = new QTimer(this);
-        timer->start(1200);
+        timer->start(2000);
         connect(timer, &QTimer::timeout, [this, timer, randomZom] {
           randomZom();
           if (zom_num >= config->defaultConfig().zombie_num) {

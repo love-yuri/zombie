@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 18:51:57
- * @LastEditTime: 2023-12-16 22:35:11
+ * @LastEditTime: 2023-12-19 09:35:02
  * @Description: 僵尸基类
  */
 #include "include/zombie/zombie.h"
@@ -51,10 +51,6 @@ void Zombie::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
   Q_UNUSED(option);
   Q_UNUSED(widget);
   painter->setRenderHint(QPainter::Antialiasing);
-  // QPen pen(Qt::red);
-  // pen.setWidth(2);
-  // painter->setPen(pen);
-  // painter->drawRect(pixmap.rect());
   painter->drawPixmap(pixmap.rect(), pixmap);
 }
 
@@ -83,20 +79,24 @@ void Zombie::move() {
 void Zombie::restart() {
   if (isAlive) {
     isAttacking = false;
+    movie_mutex.lock();
     movie->stop();
     movie->setFileName(zombieData.default_state);
     move_timer->start(zombieData.speed);
     movie->start();
+    movie_mutex.unlock();
   }
 }
 
 void Zombie::destoryGif(const QString &fileName) {
   isAlive = false;
   move_timer->stop();
+  movie_mutex.lock();
   movie->stop();
   movie->setFileName(fileName);
   movie->start();
   connect(movie, &QMovie::finished, [this] {
     emit deathed();
   });
+  movie_mutex.unlock();
 }

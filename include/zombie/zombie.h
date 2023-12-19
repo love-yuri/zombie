@@ -12,6 +12,7 @@
 #include <QGraphicsObject>
 #include <qlist.h>
 #include <qmovie.h>
+#include <qmutex.h>
 #include <qtmetamacros.h>
 
 class GameManager;
@@ -68,6 +69,8 @@ protected:
   /* 定时器 */
   QTimer *attack_timer;
   QTimer *move_timer;
+
+  QMutex movie_mutex;
 
   void move();
 };
