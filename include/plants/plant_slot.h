@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-05 21:27:59
- * @LastEditTime: 2023-12-08 19:17:02
+ * @LastEditTime: 2023-12-21 20:14:27
  * @Description: 植物的坑位
  */
 #ifndef PLANT_SLOT_H
@@ -25,6 +25,7 @@ public:
 
   QRectF boundingRect() const override;
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+  void reset();
 
   /* 坐标标识 */
   QPoint ij;
@@ -40,10 +41,6 @@ public:
 
   inline GameManager *gameManager() {
     return manager;
-  }
-
-  inline void setState(int state) {
-    this->state = state;
   }
 
 signals:

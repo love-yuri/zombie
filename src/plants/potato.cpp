@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 17:55:15
- * @LastEditTime: 2023-12-16 22:49:28
+ * @LastEditTime: 2023-12-21 21:03:36
  * @Description: 豌豆射手
  */
 #include "include/plants/potato.h"
@@ -23,6 +23,16 @@
 Potato::Potato(PlantSlot *slot, const PlantData &data) :
   Plant(slot, data) {
   // setParent(slot);
+  QWeakPointer<Zombie> weakZombie = manager->firstZombie(ij.x(), this->slot->pos());
+  if (auto zombie = weakZombie.lock()) {
+    if (zombie->collidesWithItem(slot) && zombie->alive()) {
+      zombie->destoryGif(":/zombie/boomdead.gif");
+      this->slot->reset();
+      destory();
+      return;
+    }
+  }
+  
   connect(this, &Potato::near, [this] {
     disconnect(this, &Potato::near, nullptr, nullptr);
     QWeakPointer<Zombie> weakZombie = manager->firstZombie(ij.x(), this->slot->pos());
@@ -32,9 +42,10 @@ Potato::Potato(PlantSlot *slot, const PlantData &data) :
         zombie->destoryGif(":/zombie/boomdead.gif");
       }
     }
-    this->slot->setState(0);
+    this->slot->reset();
     destory();
   });
+  
 }
 
 /* 攻击 */

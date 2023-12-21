@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 20:46:20
- * @LastEditTime: 2023-12-19 09:22:14
+ * @LastEditTime: 2023-12-21 20:58:51
  * @Description:
  */
 #include "include/manager/game_manager.h"
@@ -264,7 +264,7 @@ void GameManager::createZombieDoctor() {
   connect(zombie.data(), &Zombie::deathed, [this, weakZombie]() {
     if (auto zombie = weakZombie.lock()) {
       zombie_list[zombie->pos_i].removeOne(zombie);
-      zombie->scene()->removeItem(zombie.data());
+      // zombie->scene()->removeItem(zombie.data());
       emit victory();
     }
   });

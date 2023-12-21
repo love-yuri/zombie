@@ -107,4 +107,5 @@
     "editor.quickSuggestions": {
         "strings": "on"
     },
+    "commentTranslate.multiLineMerge": true,
 }

@@ -31,7 +31,7 @@
     "name": "zombie_doctor_complete_form",
     "default_state": ":/zombie/zombie_doctor_complete_form/default.gif",
     "attack_state" : ":/zombie/zombie_doctor_complete_form/attack.gif",
-    "blod": 200,
+    "blod": 130,
     "hurt": 1,
     "speed": 100,
     "interval": 20000

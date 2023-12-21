@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 18:51:57
- * @LastEditTime: 2023-12-19 09:35:02
+ * @LastEditTime: 2023-12-21 20:36:19
  * @Description: 僵尸基类
  */
 #include "include/zombie/zombie.h"
@@ -90,6 +90,7 @@ void Zombie::restart() {
 
 void Zombie::destoryGif(const QString &fileName) {
   isAlive = false;
+  attack_timer->stop();
   move_timer->stop();
   movie_mutex.lock();
   movie->stop();

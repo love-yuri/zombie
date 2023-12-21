@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-07 14:04:22
- * @LastEditTime: 2023-12-19 08:41:47
+ * @LastEditTime: 2023-12-21 21:10:34
  * @Description: 普通僵尸
  */
 #include "hpp/tools.hpp"
@@ -44,6 +44,7 @@ void ZombieDoctor::attack(QWeakPointer<Plant> weakPlant) {
     movie->setFileName(":/zombie/zombie_doctor_complete_form/attack_2.gif");
     movie->start();
     for (auto plant : manager->plantList().at(pos_i)) {
+      plant->plantSlot()->reset();
       plant->destory();
     }
     connect(movie, &QMovie::finished, [this] {

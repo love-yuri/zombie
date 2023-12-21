@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 17:55:15
- * @LastEditTime: 2023-12-16 22:06:00
+ * @LastEditTime: 2023-12-21 20:15:20
  * @Description: 豌豆射手
  */
 #include "include/plants/cherry.h"
@@ -59,7 +59,7 @@ void Cherry::destoryGif(QString fileName) {
   movie->setFileName(fileName);
   movie->start();
   connect(movie, &QMovie::finished, [this] {
-    slot->setState(0);
+    slot->reset();
     emit deathed();
   });
 }

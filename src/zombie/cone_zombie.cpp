@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-07 14:04:22
- * @LastEditTime: 2023-12-15 21:18:40
+ * @LastEditTime: 2023-12-21 20:37:12
  * @Description: 普通僵尸
  */
 #include "hpp/tools.hpp"
@@ -47,6 +47,7 @@ void ConeZombie::destory() {
 void ConeZombie::injuried(int blod) {
   this->blod -= blod;
   if (this->blod == 10) {
+    movie_mutex.lock();
     movie->stop();
     QString normal = manager->globalConfig()->zombiesTypeMap().key(ZombieType::NAORMAL);
     ZombieData data = manager->globalConfig()->zombiesData().value(normal);
@@ -58,6 +59,7 @@ void ConeZombie::injuried(int blod) {
       movie->setFileName(data.default_state);
     }
     movie->start();
+    movie_mutex.unlock();
   }
   if (this->blod <= 0) {
     isAlive = false;

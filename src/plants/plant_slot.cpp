@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-05 17:37:15
- * @LastEditTime: 2023-12-16 22:05:00
+ * @LastEditTime: 2023-12-21 20:14:06
  * @Description: 植物卡片
  */
 
@@ -62,10 +62,14 @@ void PlantSlot::dropEvent(QGraphicsSceneDragDropEvent *event) {
     }
   }
   connect(p.data(), &Plant::deathed, [this]() {
-    pixmap = QPixmap(81, 81);
-    pixmap.fill(QColor(0, 0, 0, 0));
-    movie = nullptr;
-    update();
-    state = 0;
+    
   });
+}
+
+void PlantSlot::reset() {
+  state = 0;
+  pixmap = QPixmap(81, 81);
+  pixmap.fill(QColor(0, 0, 0, 0));
+  movie = nullptr;
+  update();
 }

@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 11:04:50
- * @LastEditTime: 2023-12-09 13:54:21
+ * @LastEditTime: 2023-12-21 20:23:25
  * @Description: 植物基类
  */
 #ifndef PLANT_H
@@ -34,6 +34,7 @@ public:
   virtual void injuried(int blod) {
     this->blod -= blod;
     if (this->blod <= 0) {
+      slot->reset();
       isAlive = false;
       destory();
     }
@@ -45,7 +46,7 @@ public:
   }
 
 
-  inline const PlantSlot *plantSlot() {
+  inline PlantSlot *plantSlot() {
     return slot;
   }
 
