@@ -1,12 +1,13 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-06 18:51:57
- * @LastEditTime: 2023-12-21 20:36:19
+ * @LastEditTime: 2023-12-22 10:14:41
  * @Description: 僵尸基类
  */
 #include "include/zombie/zombie.h"
 #include "hpp/tools.hpp"
 #include <QPainter>
+#include <exception>
 #include <qgraphicsscene.h>
 #include <qnamespace.h>
 #include <qpen.h>
@@ -78,13 +79,19 @@ void Zombie::move() {
 
 void Zombie::restart() {
   if (isAlive) {
-    isAttacking = false;
-    movie_mutex.lock();
-    movie->stop();
-    movie->setFileName(zombieData.default_state);
-    move_timer->start(zombieData.speed);
-    movie->start();
-    movie_mutex.unlock();
+    try {
+      isAttacking = false;
+      movie_mutex.lock();
+      movie->stop();
+      movie->setFileName(zombieData.default_state);
+      move_timer->start(zombieData.speed);
+      movie->start();
+      movie_mutex.unlock();
+    } catch (std::exception e) {
+      emit destory();
+      qerror << e.what();
+    }
+    
   }
 }
 

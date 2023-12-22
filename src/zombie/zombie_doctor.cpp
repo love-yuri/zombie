@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-12-07 14:04:22
- * @LastEditTime: 2023-12-21 21:10:34
+ * @LastEditTime: 2023-12-22 10:36:57
  * @Description: 普通僵尸
  */
 #include "hpp/tools.hpp"
@@ -84,6 +84,7 @@ void ZombieDoctor::injuried(int blod) {
   this->blod -= blod;
   if (this->blod <= 0) {
     isAlive = false;
+    attack_timer->stop();
     destory();
   }
 }
