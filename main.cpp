@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-11-30 22:31:31
- * @LastEditTime: 2023-12-02 17:36:59
+ * @LastEditTime: 2023-12-23 21:31:32
  * @Description: 启动函数
  */
 #include <QApplication>
@@ -11,16 +11,6 @@
 
 int main(int argc, char *argv[]) {
   QApplication a(argc, argv);
-
-  QTranslator translator;
-  const QStringList uiLanguages = QLocale::system().uiLanguages();
-  for (const QString &locale : uiLanguages) {
-    const QString baseName = "yuri_" + QLocale(locale).name();
-    if (translator.load(":/i18n/" + baseName)) {
-      a.installTranslator(&translator);
-      break;
-    }
-  }
   yuri::Tools::init();
   MainWindow window;
   return a.exec();
