@@ -1,7 +1,7 @@
 /*
  * @Author: love-yuri yuri2078170658@gmail.com
  * @Date: 2023-09-27 13:27:55
- * @LastEditTime: 2023-12-16 22:26:28
+ * @LastEditTime: 2023-12-23 21:28:47
  * @Description:
  */
 
@@ -13,14 +13,12 @@
 #include <qmainwindow.h>
 #include <qmessagebox.h>
 #include <qsize.h>
-#include <qsoundeffect.h>
 #include <qwindowdefs.h>
 #include <qpainter.h>
 #include "hpp/tools.hpp"
 #include <QDialog>
 #include "include/game.h"
 #include "include/menu/info_dialog.h"
-#include <QSoundEffect>
 #include "include/menu/last_dialog.h"
 #include "include/menu/setting_dialog.h"
 
