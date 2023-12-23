@@ -50,3 +50,6 @@
 1. 音频功能 在 `hyprland`下出现音频无法播放
 2. 拖动画面居中 在`hyprland`下无法更改鼠标中心点
 
+## tips
+
+1. 在`main.cpp`中将`yuri::Tools::init();` 更改为`yuri::Tools::init(true)`即可开启日志输入本地文件功能.
