@@ -16,12 +16,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON) # 要求使用指定版本号
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # 开启生成 compile_commands.json
 
 # 寻找qt依赖库
-find_package(QT NAMES Qt6 REQUIRED COMPONENTS  Widgets LinguistTools )
-find_package(Qt6 REQUIRED COMPONENTS  Widgets LinguistTools)
-find_package(Qt6 COMPONENTS Network REQUIRED)
-find_package(Qt6 COMPONENTS StateMachine REQUIRED)
-find_package(Qt6 REQUIRED COMPONENTS Sql)
-find_package(Qt6 REQUIRED COMPONENTS Multimedia)
+find_package(QT NAMES Qt6 REQUIRED COMPONENTS  Widgets)
+find_package(Qt6 REQUIRED COMPONENTS  Widgets)
 
 
 # 全局包含头文件
@@ -69,13 +65,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
     )
-    qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
     # 链接文件
     target_link_libraries(${PROJECT_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
-    target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Sql)
-    target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Network)
-    target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::StateMachine)
-    target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Multimedia)
     
 
     # 设置项目属性
