@@ -31,11 +31,48 @@
 
 ### Windows
 
-自行百度安装qt后使用qtcreator或者clion进行编译构建.
+> 如果怕麻烦，直接用qt creator 打开本项目的cmakelist文件就行
+>
+> 如果怕麻烦，直接用qt creator 打开本项目的cmakelist文件就行
+>
+> 如果怕麻烦，直接用qt creator 打开本项目的cmakelist文件就行
 
-或者实用 mysy2 安装gcc cmake make qt6-base后进行编译
+1. 安装QT: [链接](https://mirrors.tuna.tsinghua.edu.cn/qt/official_releases/online_installers/) 下载 `qt-unified-windows-x64-online.exe`
 
-未在windows下测试
+2. 打开安装程序登录账号安装qt，直接开始安装
+
+3. 前面一路默认就行。到选择文件夹那里选择`qt 6.7 for desktop development ` 就行
+
+4. 安装完成后打开qt的目录将以下目录添加到系统环境变量中。如果不会请自行百度
+
+5. ```bash
+   # D:\Applications\ 是我电脑的目录，自己电脑自己看着换
+   
+   D:\Applications\Qt\Tools\CMake_64\bin;
+   D:\Applications\Qt\Tools\mingw1120_64\bin;
+   D:\Applications\Qt\Tools\Ninja;
+   D:\Applications\Qt\6.7.0\mingw_64\bin;
+   D:\Applications\Qt\6.7.0\mingw_64\plugins;
+   D:\Applications\Qt\6.7.0\mingw_64\plugins\platforms;
+   ```
+
+6. 克隆本项目到本地
+
+7. 更改项目中的 `CMakeList.txt`文件
+
+   1. 更改qt库目录: 修改`line 9: set(CMAKE_PREFIX_PATH "D:\\Applications\\Qt\\6.7.0\\mingw_64") # qt库目录` 改为自己的qt库目录
+
+   2. windows如果需要查看输出，请取消 `# 设置项目属性` 将`WIN32_EXECUTABLE` 设置为`FALSE` 或者直接注释 
+
+8. 在终端中打开本项目
+
+9. 新建build文件夹并进入文件夹
+
+10. 使用`cmake .. -G Ninja` 构建
+
+11.  使用`ninja` 开始构建程序
+
+12. 完成，直接运行就行
 
 ## 项目运行配置文件
 
